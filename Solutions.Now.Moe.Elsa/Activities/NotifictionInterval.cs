@@ -25,11 +25,12 @@ namespace Solutions.Now.Moe.Elsa.Activities
     {
 
         private readonly MoeDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration; 
 
-        public NotifictionInterval(MoeDBContext moeDBContext)
+        public NotifictionInterval(IConfiguration configuration, MoeDBContext moeDBContext)
         {
             _moeDBContext = moeDBContext;
+            _configuration = configuration; 
         }
 
 
@@ -60,6 +61,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
+            string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+
             IList<int> _stepsList = new List<int>();
             IList<string> _userNameList = new List<string>();
             IList<string> _formsList = new List<string>();
@@ -137,8 +140,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 try
                 {
 
-                    var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
-                    SqlConnection connection = new SqlConnection(@connectionString);
+                   // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                    SqlConnection connection = new SqlConnection(connectionString);
                     if (refSerial != null)
                     {
                         string query = "INSERT INTO [Moe].[DesignReview].[ApprovalHistory] ([requestserial] ,[requestType] ,[createdDate],[actionBy],[actionDate],[expireDate],[status],[URL],[Form],[step],[refserial],stage) ";
