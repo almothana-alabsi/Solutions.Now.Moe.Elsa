@@ -100,6 +100,8 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_GetConcernUserMoeUsers>()
                      .AddActivity<Construction_ChangeOrderUsers>()
                     .AddActivity<changeOrderType>()
+                    .AddActivity<Construction_InitialReceipt>()
+                    .AddActivity<Construction_partial_Receipt_Works>()
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
