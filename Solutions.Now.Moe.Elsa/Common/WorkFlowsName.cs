@@ -33,6 +33,8 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_InterimPayment = 3792;
         public const int Construction_ClosingPaymentUsers = 3804;
         public const int Construction_ContractorFinancialTemporalClaims = 3810;
+        public const int Construction_InitialReceipt = 3799;
+        public const int Construction_partial_Receipt_Works = 4836;
 
     }
 }
