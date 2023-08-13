@@ -96,6 +96,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_ClosingPaymentUsers>()
                     .AddActivity<MixedDesignUsers>()
                     .AddActivity<Construction_ContractorFinancialTemporalClaimsUsers>()
+                    .AddActivity<Construction_CaptainCommitteeMemberUsers>()
                     .AddActivity<Construction_GetConcernUserMoeUsers>()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
