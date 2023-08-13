@@ -20,11 +20,12 @@ namespace Solutions.Now.Moe.Elsa.Activities
    )]
     public class AddApproval : Activity
     {
-        private readonly MoeDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
-        public AddApproval(MoeDBContext MoeDBContext)
+            private readonly MoeDBContext _moeDBContext;
+            private readonly IConfiguration _configuration;
+        public AddApproval(IConfiguration configuration, MoeDBContext MoeDBContext)
         {
             _moeDBContext = MoeDBContext;
+            _configuration = configuration;
         }
 
 
@@ -57,6 +58,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
         public int? Stage { get; set; }
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
+            string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+
             try
             {
                 if (Status == null) { Status = 387; };
@@ -78,8 +81,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 };
                 //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                 // await _cmis2DbContext.SaveChangesAsync();
-                var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
-                SqlConnection connection = new SqlConnection(@connectionString);
+               // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                SqlConnection connection = new SqlConnection(connectionString);
 
                 if (refSerial != null)
                 {

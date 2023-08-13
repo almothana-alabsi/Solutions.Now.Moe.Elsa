@@ -30,6 +30,9 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_WorkSchedule = 3790;
         public const int Construction_ModifiedWorkSchedule = 3791;
         public const int Construction_Paymentforcompletion = 3803;
+        public const int Construction_InterimPayment = 3792;
+        public const int Construction_ClosingPaymentUsers = 3804;
+        public const int Construction_ContractorFinancialTemporalClaims = 3810;
 
     }
 }
