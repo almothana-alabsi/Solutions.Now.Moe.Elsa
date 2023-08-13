@@ -25,11 +25,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
     {
 
         private readonly ConstructionDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
 
-        public Construction_NotifictionInterval(ConstructionDBContext moeDBContext)
+        public Construction_NotifictionInterval(IConfiguration configuration, ConstructionDBContext moeDBContext)
         {
             _moeDBContext = moeDBContext;
+
+            _configuration = configuration;
         }
 
 
@@ -57,7 +59,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         public int? refSerial { get; set; }
 
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
-        { if (userNameDB == null) { return Done(); };
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+
+            if (userNameDB == null) { return Done(); };
             IList<int> _stepsList = new List<int>();
             IList<string> _userNameList = new List<string>();
             IList<string> _formsList = new List<string>();
@@ -134,8 +139,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 try
                 {
 
-                    var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
-                    SqlConnection connection = new SqlConnection(@connectionString);
+                   // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                    SqlConnection connection = new SqlConnection(connectionString);
 
 
                         string query = "INSERT INTO [Moe].[Construction].[ApprovalHistory] ([requestserial] ,[requestType] ,[createdDate],[actionBy],[actionDate],[expireDate],[status],[URL],[Form],[step]) ";

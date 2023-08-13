@@ -22,10 +22,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
     public class Construction_AddApproval : Activity
     {
         private readonly ConstructionDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
-        public Construction_AddApproval(ConstructionDBContext MoeDBContext)
+        private readonly IConfiguration _configuration;
+        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext)
         {
             _moeDBContext = MoeDBContext;
+            _configuration = configuration;
         }
 
 
@@ -56,6 +57,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         public string? createdBy { get; set; }
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
+            string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+
             try
             {
                 if (Status == null) { Status = 387; };
@@ -76,8 +79,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 };
                 //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                 // await _cmis2DbContext.SaveChangesAsync();
-                var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
-                SqlConnection connection = new SqlConnection(@connectionString);
+               // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                SqlConnection connection = new SqlConnection(connectionString);
 
    
                     string query = "INSERT INTO [Moe].[Construction].[ApprovalHistory] ([requestserial] ,[requestType] ,[createdDate],[actionBy],[expireDate],[status],[URL],[Form],[step],[ActionDetails],createdBy) ";
