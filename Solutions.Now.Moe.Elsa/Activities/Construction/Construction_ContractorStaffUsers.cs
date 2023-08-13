@@ -58,12 +58,12 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
             try
             {
-                var contractorStaff = await _ConstructionDBContext.Staff.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var contractorStaff = await _ConstructionDBContext.Staff.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
                 //المقاول
                 userNameDB[0] = RequestSender;
                 //رئيس اللجنة
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
                 userNameDB[1] = committeeCaptain.userName;
                 //رئيس قسم الابنية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead && u.organization == Organization.MOE);
