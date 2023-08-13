@@ -9,5 +9,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public int? tenderContracter1 { get; set; }
         public int? tenderSupervisor { get; set; }
         public string? tendersDepartmentEngineer { get; set; }
+
+        public decimal? tenderAmountUponAssignment { get; set; }
     }
 }

@@ -92,6 +92,9 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity< Construction_ModifiedWorkSchedule> ()
                     .AddActivity<Construction_Formationofacommittee>()
                     .AddActivity<Construction_Paymentforcompletion>()
+                    .AddActivity<Construction_ChangeOrderUsers>()
+                    .AddActivity<changeOrderType>()
+                 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()

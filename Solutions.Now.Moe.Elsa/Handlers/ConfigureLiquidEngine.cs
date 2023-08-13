@@ -19,6 +19,7 @@ namespace Solutions.Now.Moe.Elsa.Handlers
             notification.TemplateContext.Options.MemberAccessStrategy.Register<projectsTenderFlagsDTO>();
             notification.TemplateContext.Options.MemberAccessStrategy.Register<directOrderToTheContractorDTO>();
             notification.TemplateContext.Options.MemberAccessStrategy.Register<raiseSurveyorsDTO>();
+            notification.TemplateContext.Options.MemberAccessStrategy.Register<changeOrderDTO>();
 
             notification.TemplateContext.Options.MemberAccessStrategy.Register<string>();
             return Task.CompletedTask;

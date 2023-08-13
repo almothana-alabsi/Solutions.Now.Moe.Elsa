@@ -20,6 +20,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_RaiseSurveyors> RaiseSurveyors { get; set; }
         public DbSet<Construction_InsurancePolicy> InsurancePolicy { get; set; }
         public DbSet<Construction_Staff> Staff { get; set; }
+        public DbSet<Construction_ChangeOrder> ChangeOrder{get;set;} 
         public DbSet<Construction_TenderAdvancePaymentRequest> TenderAdvancePaymentRequest { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
