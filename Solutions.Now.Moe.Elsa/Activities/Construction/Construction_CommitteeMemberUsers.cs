@@ -15,7 +15,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
        Category = "Construction",
-       DisplayName = "Communication eng Committee Member Approval",
+       DisplayName = "Communication eng Committee Member Approval", 
        Description = "Communication eng Committee Member Approval in WorkflowRules Table",
        Outcomes = new[] { OutcomeNames.Done }
    )]
