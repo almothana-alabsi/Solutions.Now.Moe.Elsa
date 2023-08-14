@@ -15,9 +15,9 @@ using Solutions.Now.Moe.Elsa.Common;
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
-          Category = "DTO Training",
-          DisplayName = "DTO Training Test MixedDesignUsers",
-          Description = "DTO Training Test MixedDesignUsers",
+          Category = "Construction",
+          DisplayName = "Construction Mixed Design approval",
+          Description = "Construction Mixed Design in ApprovalHistory Table",
           Outcomes = new[] { OutcomeNames.Done }
       )]
     public class MixedDesignUsers : Activity
