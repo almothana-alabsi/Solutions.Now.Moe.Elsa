@@ -10,6 +10,7 @@ using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using Solutions.Now.Moe.Elsa.Common;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -42,7 +43,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == 3789).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_MixedDesign).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
 
             // TblUsers users;
             for (int i = 0; i < workFlowRules.Count; i++)
