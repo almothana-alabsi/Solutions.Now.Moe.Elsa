@@ -15,17 +15,17 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
        Category = "Construction",
-       DisplayName = "Captain Committee Member Approval",
-       Description = "Captain Committee Member Approval in WorkflowRules Table",
+       DisplayName = "Count Committee Member Approval",
+       Description = "Count Committee Member Approval in WorkflowRules Table",
        Outcomes = new[] { OutcomeNames.Done }
    )]
-    public class Construction_CaptainCommitteeMemberUsers : Activity
+    public class Construction_CountCommitteeUsers : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public Construction_CaptainCommitteeMemberUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public Construction_CountCommitteeUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
@@ -38,18 +38,24 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         [ActivityInput(Hint = "Enter an expression that evaluates to the workflow type.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int? workflowType { get; set; }
 
+
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
+            List<string> committeemember = new List<string>();
+            HashSet<string> userNameDB = new HashSet<string>();
             try
             {
-                var captainCommittee = _ConstructionDBContext.CommitteeMember.FirstOrDefault(x=>x.masterSerial == RequestSerial && x.type == workflowType && x.captain == 1);
-                context.Output = captainCommittee.userName;
+
+                int committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.projectSerial == RequestSerial && c.type == workflowType).CountAsync();
+
+                context.Output = committeeMembers;
+                return Done();
             }
             catch (Exception ex)
             {
-                ex.Message.ToString();
+                // Handle exception if needed
+                return Fault(ex);
             }
-            return Done();
-        }
+    }
     }
 }
