@@ -39,7 +39,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
         public int RequestSerial { get; set; }
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request Sender.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public string RequestSender { get; set; }
-
+        [ActivityInput(Hint = "Enter an expression that evaluates to the Request Type.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
+        public int RequestType { get; set; }
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
             List<int?> steps = new List<int?>();
@@ -109,7 +110,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 steps = steps,
                 name = userNameDB,
                 Screens = Screen,
-                RequestSender = RequestSender
+                RequestSender = RequestSender,
+                requestType = RequestType
 
             };
             context.Output = infoX;
