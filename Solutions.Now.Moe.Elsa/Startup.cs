@@ -104,6 +104,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_partial_Receipt_Works>()
                     .AddActivity<Construction_CountCommitteeUsers>()
                     .AddActivity<Construction_ContractorMandatoryStaffUsers>()
+                    .AddActivity<Construction_ReleaseReservations>()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
