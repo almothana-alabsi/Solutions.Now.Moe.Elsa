@@ -2,9 +2,12 @@
 using Elsa.Attributes;
 using Elsa.Models;
 using Elsa.Services;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Solutions.Now.Moe.Elsa.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +56,19 @@ namespace Solutions.Now.Moe.Elsa.Controllers
             {
                 requestSerial = id,
                 stage = stage
+            };
+            await _signaler.TriggerSignalAsync(workflowName, input: data);
+            return Ok();
+        }
+        [Route("Request/{workflowName}/{id}/{userName}/{requestType}")]
+        [HttpGet]
+        public async Task<IActionResult> Requset(string workflowName, int id, string userName, int requestType)
+        {
+            var data = new DataForRequestProject
+            {
+                requestSerial = id,
+                userName = userName,
+                requestType = requestType
             };
             await _signaler.TriggerSignalAsync(workflowName, input: data);
             return Ok();

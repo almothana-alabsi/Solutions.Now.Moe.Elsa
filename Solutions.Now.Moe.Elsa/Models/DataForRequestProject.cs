@@ -32,5 +32,8 @@ namespace Solutions.Now.Moe.Elsa.Models
         [Display(Name = "RequestSender")]
         public string? RequestSender { get; set; }
 
+        [Display(Name = "requestType")]
+        public int? requestType { get; set; }
+
     }
 }
