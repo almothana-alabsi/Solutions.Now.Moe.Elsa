@@ -33,7 +33,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
         public ConstructionSendRequestWorkflowUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
-        {
+        { 
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
             _moeDBContext = moeDBContext;
