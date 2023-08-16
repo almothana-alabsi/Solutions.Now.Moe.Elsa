@@ -43,7 +43,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<string> Screen = new List<string>();
             List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_Paymentforcompletion).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
-          //var positionUser = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == RequestSender).position;
+          var positionUser = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == RequestSender).position;
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -53,7 +53,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             }
             try
             {
-                //   var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                  // var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
         
                 
@@ -67,7 +67,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[2] = users.username;
                 }
                 //المهندس المشرف
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
                 userNameDB[1] = committeeCaptain.userName;
                
                 ////مدير الشؤون الادارية والمالية
@@ -86,7 +86,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[5] =userNameDB[8] = userNameDB[15]=users.username;
                //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
                 userNameDB[6] = userNameDB[19]= CommunicationEng.userName;
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
