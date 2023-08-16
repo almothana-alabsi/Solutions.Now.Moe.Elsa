@@ -27,12 +27,12 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
    Description = "Construction_Send Request to Workflow Table",
    Outcomes = new[] { OutcomeNames.Done }
 )]
-    public class Construction_SendRequestWorkflowUsers : Activity
+    public class ConstructionSendRequestWorkflowUsers : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
-        public Construction_SendRequestWorkflowUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public ConstructionSendRequestWorkflowUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
