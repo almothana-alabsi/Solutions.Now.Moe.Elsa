@@ -16,8 +16,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
           Category = "Construction",
-          DisplayName = "Construction Contractor Financial Temporal Claims approval",
-          Description = "Construction Contractor Financial Temporal Claims in ApprovalHistory Table",
+          DisplayName = "Construction Release Reservations approval",
+          Description = "Construction Release Reservations in ApprovalHistory Table",
           Outcomes = new[] { OutcomeNames.Done }
       )]
     public class Construction_ReleaseReservations : Activity
