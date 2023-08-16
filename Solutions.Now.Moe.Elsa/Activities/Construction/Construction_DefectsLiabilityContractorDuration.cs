@@ -23,7 +23,7 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
           Description = "Add Users of Defects Liability Contractor Duration1 approvals",
           Outcomes = new[] { OutcomeNames.Done }
       )]
-    public class DefectsLiabilityContractorDuration : Activity
+    public class Construction_DefectsLiabilityContractorDuration : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
@@ -31,7 +31,7 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
   
         private readonly IClock _clock;
 
-        public DefectsLiabilityContractorDuration(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext, IClock clock)
+        public Construction_DefectsLiabilityContractorDuration(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext, IClock clock)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;

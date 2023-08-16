@@ -37,7 +37,8 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_partial_Receipt_Works = 4836;
         public const int Construction_MixedDesign = 3789;
         public const int Construction_ReleaseReservations = 4882;
-        public const int DefectsLiabilityContractorDuration = 4861;
+        public const int Construction_DefectsLiabilityContractorDuration = 4861;
+        public const int Construction_finalDelivery = 3801;
 
     }
 }
