@@ -106,8 +106,10 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_ContractorMandatoryStaffUsers>()
                     .AddActivity<Construction_ReleaseReservations>()
                     .AddActivity<Construction_finalDelivery>()
-                                        .AddActivity<ConstructionSendRequestWorkflowUsers>()
-
+                    .AddActivity<ConstructionSendRequestWorkflowUsers>()
+                    .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
+                    .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
+                    .AddActivity<construcion_HeadOfficialBooksDepartment>()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
