@@ -68,7 +68,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[1] = users.username;
                 }
                 //المهندس المشرف
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
                 userNameDB[2] = committeeCaptain.userName;
 
 
