@@ -110,6 +110,8 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
                     .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
                     .AddActivity<construcion_HeadOfficialBooksDepartment>()
+                    .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
