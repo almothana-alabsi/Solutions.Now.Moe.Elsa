@@ -11,5 +11,6 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public string? tendersDepartmentEngineer { get; set; }
 
         public decimal? tenderAmountUponAssignment { get; set; }
+        public int? internalExternal { get; set; }
     }
 }
