@@ -112,6 +112,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<construcion_HeadOfficialBooksDepartment>()
                     .AddActivity<Construction_SiteNote>()
                     .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
