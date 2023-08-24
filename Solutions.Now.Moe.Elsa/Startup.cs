@@ -111,8 +111,18 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
                     .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
                     .AddActivity<construcion_HeadOfficialBooksDepartment>()
-                    .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                           .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
+
+                    .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
+                            .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
+                         .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                    .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
+
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()

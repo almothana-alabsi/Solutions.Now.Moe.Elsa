@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -45,6 +46,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<string> Screen = new List<string>();
             List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.sitevisitConsultant).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
+            int? flag = 0;
+
+
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -83,20 +87,27 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 //مدير ادارة الشؤون المالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
                 userNameDB[7] = users.username;
-
+                //الاستشاري
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == tender.internalExternal && u.position == Positions.Consultant);
+                if (users != null)
+                {
+                    userNameDB[8] = users.username;
+                }
+                 flag = tender.internalExternal;
 
             }
             catch (Exception ex)
             {
                 ex.Message.ToString();
             }
-            DataForRequestProject infoX = new DataForRequestProject
+            siteHandOverDTO infoX = new siteHandOverDTO
             {
                 requestSerial = RequestSerial,
                 steps = steps,
                 name = userNameDB,
                 Screens = Screen,
-                RequestSender= RequestSender
+                RequestSender= RequestSender,
+                flagInternalExternal = flag
 
             };
             context.Output = infoX;
