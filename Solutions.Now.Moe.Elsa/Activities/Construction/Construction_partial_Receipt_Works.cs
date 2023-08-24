@@ -59,6 +59,41 @@ namespace Solutions.Now.Moe.Elsa.Activities
             {
                 var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
+                //المقاول
+                userNameDB[0] = RequestSender;
+                //رئيس قسم الابنية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead && u.organization == Organization.MOE);
+                if (users != null)
+                {
+                    userNameDB[1] = users.username;
+                }
+                //رئيس اللجنة
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                userNameDB[2] = committeeCaptain.userName;
+                //مدير الشؤون الادارية والمالية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
+                if (users != null)
+                {
+                    userNameDB[3] = users.username;
+                }
+                //مدير مديرية التربية والتعليم
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                if (users != null)
+                {
+                    userNameDB[4] = users.username;
+                }
+                //رئيس قسم متابعة تنفيذ المشاريع المحلية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
+                userNameDB[5] = users.username;
+                //مهندس اتصال
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                userNameDB[6] = committeeCaptain.userName;
+                //مدير مديرية الشؤون الهندسية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
+                userNameDB[7] = users.username;
+                //مدير ادارة الابنية والمشاريع الدولية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
+                userNameDB[8] = users.username;
 
             }
             catch (Exception ex)

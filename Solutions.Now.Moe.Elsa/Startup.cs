@@ -16,6 +16,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using Automatonymous;
 using Quartz;
+using Solutions.Now.CMIS2.Elsa.Activities;
 
 namespace Solutions.Now.Moe.Elsa
 {
@@ -110,6 +111,9 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
                     .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
                     .AddActivity<construcion_HeadOfficialBooksDepartment>()
+                    .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                    .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
+
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
