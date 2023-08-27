@@ -45,12 +45,11 @@ namespace Solutions.Now.Moe.Elsa.Activities
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_InitialReceipt).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_OfficialCommunicationEngineerBooks).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
-
                 userNameDB.Add(workFlowRules[i].username);
                 steps.Add(workFlowRules[i].step);
                 Screen.Add(workFlowRules[i].screen);
@@ -77,7 +76,6 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //الامين العام للشؤون الادارية والمالية 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
                 userNameDB[4] = users.username;
-
             }
             catch (Exception ex)
             {

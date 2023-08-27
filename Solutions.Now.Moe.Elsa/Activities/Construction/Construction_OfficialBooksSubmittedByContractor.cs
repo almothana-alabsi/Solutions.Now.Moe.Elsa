@@ -17,17 +17,17 @@ namespace Solutions.Now.Moe.Elsa.Activities
 {
     [Activity(
        Category = "Construction",
-       DisplayName = "   construcion_HeadOfficialBooksDepartment",
-       Description = "construcion_HeadOfficialBooksDepartment in WorkflowRules Table",
+       DisplayName = "   Construction_delegateDirectorEducationWithEngineerPermissionsUsers",
+       Description = "Construction_delegateDirectorEducationWithEngineerPermissionsUsers in WorkflowRules Table",
        Outcomes = new[] { OutcomeNames.Done }
    )]
-    public class construcion_HeadOfficialBooksDepartment : Activity
+    public class Construction_OfficialBooksSubmittedByContractor : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public construcion_HeadOfficialBooksDepartment(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public Construction_OfficialBooksSubmittedByContractor(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
@@ -45,7 +45,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_OfficialCommunicationEngineerBooks).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_OfficialBooksBycontractor).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
@@ -58,24 +58,41 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
             try
             {
-                var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-
-
+                var paymentRequests = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == paymentRequests.tenderSerial);
+                // المقاول
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                userNameDB[0] = users.username;
+                //المهندس المشرف
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                userNameDB[1] = committeeCaptain.userName;
+                //مدير الشؤون الادارية والمالية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
+                //مدير مديرية التربية والتعليم
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                if (users != null)
+                {
+                    userNameDB[3] = users.username;
+                }
+                //مهندس اتصال
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                userNameDB[3] = committeeCaptain.userName;
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
-                userNameDB[1] = users.username;
+                userNameDB[4] = users.username;
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
-                userNameDB[2] = users.username;
+                userNameDB[5] = users.username;
                 //مدير ادارة الابنية والمشاريع الدولية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
-                userNameDB[3] = users.username;
+                userNameDB[6] = users.username;
                 //الامين العام للشؤون الادارية والمالية 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
-                userNameDB[4] = users.username;
-
+                userNameDB[7] = users.username;
             }
             catch (Exception ex)
             {
@@ -87,7 +104,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 steps = steps,
                 name = userNameDB,
                 Screens = Screen,
-                RequestSender = RequestSender,
+                RequestSender = RequestSender
 
             };
             context.Output = infoX;

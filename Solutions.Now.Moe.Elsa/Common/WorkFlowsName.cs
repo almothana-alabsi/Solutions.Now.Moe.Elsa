@@ -44,5 +44,7 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_SiteNote = 3822;
         public const int Construction_DailyWorkflow = 3821;
         public const int Construction_ApprovalBooksByContractor = 4916;
-}
+        public const int Construction_OfficialBooksBycontractor = 4916;
+    }       
+
 }
