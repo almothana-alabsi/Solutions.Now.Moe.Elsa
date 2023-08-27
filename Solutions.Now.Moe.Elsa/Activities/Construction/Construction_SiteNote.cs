@@ -56,18 +56,22 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                //var approvalOfDesignMixtures = await _ConstructionDBContext.ApprovalOfDesignMixtures.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                //var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == approvalOfDesignMixtures.tenderSerial);
+                var approvalOfDesignMixtures = await _ConstructionDBContext.ApprovalOfDesignMixtures.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == approvalOfDesignMixtures.tenderSerial);
 
 
-                ////المهندس المشرف
-                //var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                //userNameDB[0] = userNameDB[1] = committeeCaptain.userName;
+                //المهندس المشرف
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                userNameDB[1] = committeeCaptain.userName;
 
-                //// المقاول
-                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                //userNameDB[2] = users.username;
+                // المقاول
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                userNameDB[2] = users.username;
 
+
+                // مهندس موقع
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng);
+                userNameDB[0] = users.username;
 
             }
             catch (Exception ex)
