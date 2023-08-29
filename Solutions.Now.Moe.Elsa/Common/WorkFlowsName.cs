@@ -46,6 +46,7 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_ApprovalBooksByContractor = 4916;
         public const int Construction_OfficialBooksBycontractor = 4916;
         public const int Construction_InitialReceipt = 4631;
+
     }       
 
 }
