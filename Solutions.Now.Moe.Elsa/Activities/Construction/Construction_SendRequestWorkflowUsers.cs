@@ -49,7 +49,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         {
             try
             {
-                string URL = "http://207.180.223.162:5002/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial.ToString();
+                string URL = "http://localhost:5002/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial.ToString();
                 context.Output = URL;
             }
             catch (Exception ex)
