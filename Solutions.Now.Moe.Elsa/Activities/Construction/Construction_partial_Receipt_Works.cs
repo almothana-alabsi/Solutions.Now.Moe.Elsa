@@ -12,6 +12,8 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
+using Microsoft.EntityFrameworkCore;
+
 namespace Solutions.Now.Moe.Elsa.Activities
 {
     [Activity(

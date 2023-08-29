@@ -12,6 +12,7 @@ using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {

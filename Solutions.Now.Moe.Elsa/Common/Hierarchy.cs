@@ -1,5 +1,4 @@
 ﻿using Amazon.DeviceFarm.Model;
-using MassTransit.Contracts.Conductor;
 using Parlot.Fluent;
 using System;
 

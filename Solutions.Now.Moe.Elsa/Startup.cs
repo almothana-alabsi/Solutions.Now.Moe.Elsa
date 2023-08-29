@@ -42,7 +42,7 @@ namespace Solutions.Now.Moe.Elsa
             // Elsa services.
            services
                 .AddElsa(elsa => elsa
-                    .UseEntityFrameworkPersistence(ef => ef.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
+                    .UseEntityFrameworkPersistence(ef => ef.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),false)
                     .AddConsoleActivities()
                     .AddActivity<NotifictionInterval>()
                     .AddActivity<PlanningWorkFlow>()

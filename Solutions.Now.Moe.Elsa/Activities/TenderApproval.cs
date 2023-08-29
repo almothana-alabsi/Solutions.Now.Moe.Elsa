@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {

@@ -12,6 +12,7 @@ using System.Linq;
 using System;
 using Esprima;
 using Solutions.Now.Moe.Elsa.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
