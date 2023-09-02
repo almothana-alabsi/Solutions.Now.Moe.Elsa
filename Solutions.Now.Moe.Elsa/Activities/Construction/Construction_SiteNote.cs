@@ -57,7 +57,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                var approvalOfDesignMixtures = await _ConstructionDBContext.ApprovalOfDesignMixtures.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                //ProceduresForSubmittingSiteMemorandum
+                var approvalOfDesignMixtures = await _ConstructionDBContext.ProceduresForSubmittingSiteMemorandum.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == approvalOfDesignMixtures.tenderSerial);
 
 
