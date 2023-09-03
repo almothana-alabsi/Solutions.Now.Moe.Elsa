@@ -132,8 +132,12 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[14] = users.username;
                 }
 
-                //  رئيس قسم الرقابة
-                // Write Your Code Here [15]
+                // رئيس قسم الرقابة الداخلية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                if (users != null)
+                {
+                    userNameDB[15] = users.username;
+                }
             }
             catch (Exception ex)
             {
