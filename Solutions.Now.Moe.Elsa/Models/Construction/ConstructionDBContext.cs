@@ -24,6 +24,9 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_TenderAdvancePaymentRequest> TenderAdvancePaymentRequest { get; set; }
         public DbSet<Construction_ApprovalOfDesignMixtures> ApprovalOfDesignMixtures { get; set; }
         public DbSet<Construction_LabApproval> LabApproval { get; set; }
+        public DbSet<Construction_detailsOfTakeOverCommittee> detailsOfTakeOverCommittee { get; set; }
+        public DbSet<Construction_finalDeliveryDB> FinalReceiptWork { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("Construction");
