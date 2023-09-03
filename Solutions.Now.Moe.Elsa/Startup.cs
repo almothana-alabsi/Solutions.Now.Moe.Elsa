@@ -120,6 +120,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_ApprovalBooksByContractor>()
                             .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
+                    .AddActivity<Construction_DefectsLiabilityContractorDurationPartial>()
        
 
 
