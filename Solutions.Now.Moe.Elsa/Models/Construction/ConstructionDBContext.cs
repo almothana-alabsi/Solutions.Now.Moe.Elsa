@@ -27,6 +27,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_officialBooks> officialBooks { get; set; }
         public DbSet<Construction_ProceduresForSubmittingSiteMemorandum> ProceduresForSubmittingSiteMemorandum { get; set; }
 
+        public DbSet<Construction_tenderCancellationProcedures> tenderCancellationProcedures { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("Construction");

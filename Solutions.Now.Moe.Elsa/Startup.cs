@@ -121,6 +121,7 @@ namespace Solutions.Now.Moe.Elsa
                             .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationPartial>()
+                    .AddActivity<Construction_BidCancellation>()
        
 
 
