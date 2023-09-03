@@ -57,9 +57,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                var tenderCancellationProcedures = await _ConstructionDBContext.tenderCancellationProcedures.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tenderProjectStop = await _ConstructionDBContext.tenderProjectStop.FirstOrDefaultAsync(x => x.serial == RequestSerial);
 
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == tenderCancellationProcedures.tenderSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == tenderProjectStop.tenderSerial);
 
                 //مهندس اتصال
                 /*  var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == tenderCancellationProcedures.projectSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
@@ -101,7 +101,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 // Write Your Code Here [9]
 
                 //رئيس اللجنة
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tenderCancellationProcedures.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tenderProjectStop.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
                 if (committeeCaptain != null)
                 {
                     userNameDB[10] = committeeCaptain.userName;
