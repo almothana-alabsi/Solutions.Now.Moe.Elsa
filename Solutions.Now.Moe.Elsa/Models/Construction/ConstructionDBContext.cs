@@ -30,6 +30,8 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_tenderCancellationProcedures> tenderCancellationProcedures { get; set; }
         public DbSet<Construction_tenderProjectResume> tenderProjectResume { get; set; }
         public DbSet<Construction_tenderProjectStop> tenderProjectStop { get; set; }
+        public DbSet<Construction_detailsOfTakeOverCommittee> detailsOfTakeOverCommittee { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("Construction");
