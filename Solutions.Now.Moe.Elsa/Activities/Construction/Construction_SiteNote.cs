@@ -72,7 +72,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
 
                 // مهندس موقع
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
                 userNameDB[0] = users.username;
 
             }
