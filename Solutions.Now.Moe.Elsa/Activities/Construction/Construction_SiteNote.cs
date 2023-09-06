@@ -64,7 +64,18 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[1] = committeeCaptain.userName;
+                if (RequestSender != committeeCaptain.userName)
+                {
+                 
+                    userNameDB[0] = RequestSender;
+                    userNameDB[1] = committeeCaptain.userName;
+
+                }
+                else {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
+                    userNameDB[0] = RequestSender;
+                    userNameDB[1] = users.username;
+                }
 
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
@@ -72,8 +83,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
 
                 // مهندس موقع
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
-                userNameDB[0] = users.username;
+              /*  users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
+                userNameDB[0] = users.username;*/
 
             }
             catch (Exception ex)

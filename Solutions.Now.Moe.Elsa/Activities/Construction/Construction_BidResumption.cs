@@ -62,8 +62,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == tenderProjectResume.tenderSerial);
 
                 //مهندس اتصال
-                /*  var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == tenderCancellationProcedures.projectSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                  userNameDB[0] = CommunicationEng.userName;*/
+                  var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tenderProjectResume.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                  userNameDB[0] = CommunicationEng.userName;
 
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
@@ -129,7 +129,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
 
                 // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[14] = users.username;
