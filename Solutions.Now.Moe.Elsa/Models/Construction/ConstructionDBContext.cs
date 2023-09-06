@@ -31,6 +31,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_tenderProjectResume> tenderProjectResume { get; set; }
         public DbSet<Construction_tenderProjectStop> tenderProjectStop { get; set; }
         public DbSet<Construction_detailsOfTakeOverCommittee> detailsOfTakeOverCommittee { get; set; }
+        public DbSet<Construction_DailyWorkProgressReport> DailyWorkProgressReport { get; set; }
         public DbSet<Construction_partialTakeOver> partialTakeOver { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
