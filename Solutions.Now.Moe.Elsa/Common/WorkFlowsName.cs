@@ -49,6 +49,8 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_BidCancellation = 4729;
         public const int Construction_BidStop = 4743;
         public const int Construction_BidResumption = 4747;
+        public const int Construction_QualityControl = 3797;
+
 
     }       
 
