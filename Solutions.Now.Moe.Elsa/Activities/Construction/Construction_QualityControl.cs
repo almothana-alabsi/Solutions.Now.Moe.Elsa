@@ -17,17 +17,17 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
            Category = "Construction",
-           DisplayName = "Construction Site Note approval",
-           Description = "Construction Site Note in ApprovalHistory Table",
+           DisplayName = "Construction Quality Control approval",
+           Description = "Construction Quality Control in ApprovalHistory Table",
            Outcomes = new[] { OutcomeNames.Done }
        )]
-    public class Construction_SiteNote : Activity
+    public class Construction_QualityControl : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public Construction_SiteNote(ConstructionDBContext ConstructionDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public Construction_QualityControl(ConstructionDBContext ConstructionDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = ConstructionDBContext;
             _ssoDBContext = ssoDBContext;
@@ -44,7 +44,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_SiteNote).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_QualityControl).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
@@ -57,34 +57,22 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                //ProceduresForSubmittingSiteMemorandum
-                var approvalOfDesignMixtures = await _ConstructionDBContext.ProceduresForSubmittingSiteMemorandum.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == approvalOfDesignMixtures.tenderSerial);
+                var QualityControl = await _ConstructionDBContext.SubmissionApprovalQualityControlProjectSamples.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == QualityControl.tenderSerial);
 
-
-                //المهندس المشرف
+                //رئيس اللجنة
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                if (RequestSender != committeeCaptain.userName)
-                {
-                 
-                    userNameDB[0] = RequestSender;
-                    userNameDB[1] = committeeCaptain.userName;
+                userNameDB[0] = committeeCaptain.userName;
 
-                }
-                else {
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
-                    userNameDB[0] = RequestSender;
-                    userNameDB[1] = users.username;
-                }
 
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                userNameDB[2] = users.username;
+                userNameDB[1] = users.username;
 
+                //مهندس اتصال
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                userNameDB[2] = CommunicationEng.userName;
 
-                // مهندس موقع
-              /*  users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
-                userNameDB[0] = users.username;*/
 
             }
             catch (Exception ex)
