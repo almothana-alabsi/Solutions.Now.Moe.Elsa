@@ -62,33 +62,39 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
             }
             try
             {
-                var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
-                //رئيس اللجنة
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[10] = committeeCaptain.userName;
-                //رئيس قسم الابنية
+                var partialTakeOver = await _ConstructionDBContext.partialTakeOver.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == partialTakeOver.tenderSerial);
+                //المقاول
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                if (users != null)
+                {
+                    userNameDB[7] = userNameDB[12] = users.username;
+                }
+                //المهندس المشرف
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                if (users != null)
+                {
+                    userNameDB[8] = userNameDB[13] = committeeCaptain.userName;
+
+                }//رئيس قسم الابنية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead && u.organization == Organization.MOE);
                 if (users != null)
                 {
-                    userNameDB[11] = users.username;
+                    userNameDB[9] = userNameDB[14] = users.username;
                 }
                 //مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
-                    userNameDB[12] = users.username;
+                    userNameDB[10] = userNameDB[15] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
                 if (users != null)
+
                 {
-                    userNameDB[13] = users.username;
+                    userNameDB[11] = userNameDB[16] = users.username;
                 }
-
-                var headCommittee = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_InitialReceipt && x.captain == 1);
-                userNameDB[14] = committeeCaptain.userName;
-
             }
             catch (Exception ex)
             {

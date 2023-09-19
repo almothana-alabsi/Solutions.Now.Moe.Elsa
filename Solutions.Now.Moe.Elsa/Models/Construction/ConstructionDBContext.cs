@@ -26,6 +26,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_LabApproval> LabApproval { get; set; }
         public DbSet<Construction_officialBooks> officialBooks { get; set; }
         public DbSet<Construction_ProceduresForSubmittingSiteMemorandum> ProceduresForSubmittingSiteMemorandum { get; set; }
+        public DbSet<Construction_InitialReceiptDB> TakeOver { get; set; }
 
         public DbSet<Construction_tenderCancellationProcedures> tenderCancellationProcedures { get; set; }
         public DbSet<Construction_tenderProjectResume> tenderProjectResume { get; set; }

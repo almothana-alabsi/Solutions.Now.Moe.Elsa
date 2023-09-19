@@ -60,7 +60,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
 
             try
-            {
+                {
                 if (Status == null) { Status = 387; };
                 ApprovalHistory approvalHistory = new ApprovalHistory
                 {
