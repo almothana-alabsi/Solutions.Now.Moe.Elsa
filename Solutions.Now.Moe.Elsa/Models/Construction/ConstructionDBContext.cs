@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solutions.Now.Moe.Elsa.Activities;
+using Solutions.Now.Moe.Elsa.Activities.Construction;
 
 namespace Solutions.Now.Moe.Elsa.Models.Construction
 {
@@ -34,6 +35,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_DailyWorkProgressReport> DailyWorkProgressReport { get; set; }
         public DbSet<Construction_partialTakeOver> partialTakeOver { get; set; }
         public DbSet<Construction_SubmissionApprovalQualityControlProjectSamples> SubmissionApprovalQualityControlProjectSamples { get; set; }
+        public DbSet<InvoicesPayment> InvoicesPayment { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

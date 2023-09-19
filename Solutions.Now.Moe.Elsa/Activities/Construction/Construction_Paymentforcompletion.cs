@@ -1,16 +1,16 @@
-﻿using Elsa;
+﻿using Elsa.Attributes;
+using Elsa;
+using Solutions.Now.Moe.Elsa.Models;
+using Solutions.Now.Moe.Elsa.Common;
+using Elsa.Services;
 using Elsa.ActivityResults;
-using Elsa.Attributes;
 using Elsa.Expressions;
 using Elsa.Services.Models;
-using Solutions.Now.Moe.Elsa.Models;
-using Solutions.Now.Moe.Elsa.Models.Construction;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.Threading.Tasks;
-using Solutions.Now.Moe.Elsa.Common;
-using Elsa.Services;
+using Solutions.Now.Moe.Elsa.Models.Construction;
 using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
@@ -18,7 +18,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
     [Activity(
           Category = "Construction",
           DisplayName = "Construction Payment for completion",
-          Description = "Construction Payment for completion",
+          Description = "Construction Payment for completion in ApprovalHistory Table",
           Outcomes = new[] { OutcomeNames.Done }
       )]
     public class Construction_Paymentforcompletion : Activity
@@ -26,16 +26,19 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
-        public Construction_Paymentforcompletion(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+
+        public Construction_Paymentforcompletion(ConstructionDBContext ConstructionDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
-            _ConstructionDBContext = DesignReviewDBContext;
+            _ConstructionDBContext = ConstructionDBContext;
             _ssoDBContext = ssoDBContext;
             _moeDBContext = moeDBContext;
+
         }
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request serial.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int RequestSerial { get; set; }
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request Sender.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public string RequestSender { get; set; }
+
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
             List<int?> steps = new List<int?>();
@@ -43,15 +46,18 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<string> Screen = new List<string>();
             List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_Paymentforcompletion).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
+
             for (int i = 0; i < workFlowRules.Count; i++)
             {
+
                 userNameDB.Add(workFlowRules[i].username);
                 steps.Add(workFlowRules[i].step);
                 Screen.Add(workFlowRules[i].screen);
             }
+
             try
             {
-             //   var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var invoicesPayment = await _ConstructionDBContext.InvoicesPayment.FirstOrDefaultAsync(x => x.Serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
@@ -77,12 +83,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 {
                     userNameDB[3] = users.username;
                 }
-                ////مدير الشؤون الادارية والمالية
+
+                //مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
-                    if (users != null)
-                    {
-                        userNameDB[5] = users.username;
-                    }
+                if (users != null)
+                {
+                    userNameDB[5] = users.username;
+                }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
                 if (users != null)
@@ -111,7 +118,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[13] = users.username;
                 //المحاسب
-               // userNameDB[14] = contractorStaff.Accountant;
+                //userNameDB[14] = contractorStaff.Accountant;
             }
             catch (Exception ex)
             {
@@ -130,3 +137,4 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         }
     }
 }
+
