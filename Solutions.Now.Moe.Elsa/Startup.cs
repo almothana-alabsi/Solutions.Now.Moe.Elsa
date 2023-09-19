@@ -125,6 +125,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_BidStop>()
                     .AddActivity<Construction_BidResumption>()
                     .AddActivity<DefectsLiabilityContractorDuration1>()
+                    .AddActivity<Construction_QualityControl>()
        
 
 
