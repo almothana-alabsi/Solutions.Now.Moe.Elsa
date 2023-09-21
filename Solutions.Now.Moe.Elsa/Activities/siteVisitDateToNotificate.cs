@@ -20,13 +20,13 @@ namespace Solutions.Now.Moe.Elsa.Activities
           Description = "Site Visit Date",
           Outcomes = new[] { OutcomeNames.Done }
       )]
-    public class siteVisitDateToNotificate : Activity
+    public class SiteVisitDateToNotificate : Activity
     {
         private readonly DesignReviewDBContext _DesignReviewDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public siteVisitDateToNotificate(DesignReviewDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public SiteVisitDateToNotificate(DesignReviewDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _DesignReviewDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
