@@ -126,7 +126,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 //المحاسب
                 if (users != null)
                 {
-                    userNameDB[14] = invoicesPayment.Accountant;
+                    userNameDB[14] = invoicesPayment.accountant;
                 }
             }
             catch (Exception ex)
