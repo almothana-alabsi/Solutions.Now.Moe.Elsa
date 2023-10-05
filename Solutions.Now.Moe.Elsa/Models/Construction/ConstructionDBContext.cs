@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solutions.Now.Moe.Elsa.Activities;
 using Solutions.Now.Moe.Elsa.Activities.Construction;
+using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
 
 namespace Solutions.Now.Moe.Elsa.Models.Construction
 {
@@ -35,6 +36,8 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_detailsOfTakeOverCommittee> detailsOfTakeOverCommittee { get; set; }
         public DbSet<Construction_DailyWorkProgressReport> DailyWorkProgressReport { get; set; }
         public DbSet<Construction_partialTakeOver> partialTakeOver { get; set; }
+        public DbSet<Construction_Non_complianceWithActionsCorrectiveActionsDB> MatchingCorrectiveAction { get; set; }
+
         public DbSet<Construction_SubmissionApprovalQualityControlProjectSamples> SubmissionApprovalQualityControlProjectSamples { get; set; }
         public DbSet<InvoicesPayment> InvoicesPayment { get; set; }
 
