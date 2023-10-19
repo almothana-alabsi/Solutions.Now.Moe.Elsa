@@ -99,7 +99,7 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_ContractorFinancialTemporalClaimsUsers>()
                      .AddActivity<Construction_CaptainCommitteeMemberUsers>()
                      .AddActivity<Construction_GetConcernUserMoeUsers>()
-                      .AddActivity<Construction_ChangeOrderUsers>()
+                     .AddActivity<Construction_ChangeOrderUsers>()
                      .AddActivity<changeOrderType>()
                      .AddActivity<Construction_InitialReceipt>()
                      .AddActivity<Construction_partial_Receipt_Works>()
@@ -114,11 +114,10 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_SiteNote>()
                      .AddActivity<Construction_DailyWorkflow>()
                      .AddActivity<Construction_ApprovalBooksByContractor>()
-
                      .AddActivity<Construction_SiteNote>()
                      .AddActivity<Construction_DailyWorkflow>()
                      .AddActivity<Construction_ApprovalBooksByContractor>()
-                             .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                     .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                      .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                      .AddActivity<Construction_DefectsLiabilityContractorDurationPartial>()
                      .AddActivity<Construction_BidCancellation>()
@@ -126,9 +125,6 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_BidResumption>()
                      .AddActivity<DefectsLiabilityContractorDuration1>()
                      .AddActivity<Construction_QualityControl>()
-
-
-
                      .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                      .AddQuartzTemporalActivities()
                      .AddWorkflowsFrom<Startup>()
