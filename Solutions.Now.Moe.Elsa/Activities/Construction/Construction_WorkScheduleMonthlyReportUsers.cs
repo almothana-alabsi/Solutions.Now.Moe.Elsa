@@ -1,53 +1,50 @@
-﻿using Amazon.AWSSupport.Model;
-using Elsa.Attributes;
-using Elsa;
-using Solutions.Now.Moe.Elsa.Models;
-using Elsa.Services;
+﻿using Elsa;
 using Elsa.ActivityResults;
+using Elsa.Attributes;
 using Elsa.Expressions;
 using Elsa.Services.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
+using Solutions.Now.Moe.Elsa.Models;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Threading.Tasks;
 using Solutions.Now.Moe.Elsa.Common;
+using Elsa.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Solutions.Now.Moe.Elsa.Activities
+namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
-       Category = "Construction",
-       DisplayName = "Construction_Non_complianceWithActionsCorrectiveActions   Approval",
-       Description = "Construction_Non_complianceWithActionsCorrectiveActions in WorkflowRules Table",
-       Outcomes = new[] { OutcomeNames.Done }
-   )]
-    public class Construction_Non_complianceWithActionsCorrectiveActions : Activity
+      Category = "Construction",
+      DisplayName = "Modified Work Schedule Monthly Report Approval",
+      Description = "Modified Work Schedule Monthly Report Approval in WorkflowRules Table",
+      Outcomes = new[] { OutcomeNames.Done }
+  )]
+    public class Construction_WorkScheduleMonthlyReportUsers : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
-
-        public Construction_Non_complianceWithActionsCorrectiveActions(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public Construction_WorkScheduleMonthlyReportUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
             _moeDBContext = moeDBContext;
 
         }
-
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request serial.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int RequestSerial { get; set; }
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request Sender.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public string RequestSender { get; set; }
-
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_Non_complianceWithActionsCorrectiveActions).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_WorkScheduleMonthlyReportUsers).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
+  
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -59,17 +56,28 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
             try
             {
-                var MatchingCorrectiveAction = await _ConstructionDBContext.MatchingCorrectiveAction.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == MatchingCorrectiveAction.tenderSerial);
-                //رئيس اللجنة
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[0] = committeeCaptain.userName;
-                //مهندس موقع 
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.siteEng);
-                userNameDB[1] = users.username;
+
+                var WorkScheduleMonthlyReport = await _ConstructionDBContext.WorkScheduleMonthlyReport.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == WorkScheduleMonthlyReport.tenderSerial);
+
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                userNameDB[2] = users.username;
+                userNameDB[0] = users.username;
+
+                //المهندس المشرف
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                if (users != null)
+                {
+                    userNameDB[1] = committeeCaptain.userName;
+                }
+                //مهندس اتصال
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == WorkScheduleMonthlyReport.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                if (users != null)
+                {
+                    userNameDB[0] = CommunicationEng.userName;
+                }
+               
             }
             catch (Exception ex)
             {
@@ -81,11 +89,13 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 steps = steps,
                 name = userNameDB,
                 Screens = Screen,
-                RequestSender = RequestSender
-
+                RequestSender = RequestSender,
             };
             context.Output = infoX;
+
             return Done();
         }
     }
 }
+
+

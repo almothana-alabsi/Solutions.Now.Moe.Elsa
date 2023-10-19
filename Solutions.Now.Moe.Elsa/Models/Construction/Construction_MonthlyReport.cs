@@ -2,12 +2,11 @@
 
 namespace Solutions.Now.Moe.Elsa.Models.Construction
 {
-    public class InvoicesPayment
+    public class Construction_MonthlyReport
     {
         [Key]
-        public int? Serial { get; set; }
+        public int? serial { get; set; }
         public int? tenderSerial { get; set; }
-        public int? status { get; set; }
-        public string accountant { get; set; }
+        public int? projectSerial { get; set; }
     }
 }
