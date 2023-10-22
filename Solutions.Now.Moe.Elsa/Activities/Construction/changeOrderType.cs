@@ -46,18 +46,18 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             bool result = false;
             try
             {
-               var change = await _ConstructionDBContext.ChangeOrder.FirstOrDefaultAsync(r => r.serial == RequestSerial);
+               var change = await _ConstructionDBContext.ChangeOrder.OrderBy(x=>x.serial).FirstOrDefaultAsync(r => r.serial == RequestSerial);
                 Tender tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(s => s.tenderSerial.Equals(change.tenderSerial));
-                var fourth= (double)tender.tenderAmountUponAssignment *0.15;
-                var thirty= (double)tender.tenderAmountUponAssignment *0.30;
-                var amount = change.amount;
+                var fourth= Convert.ToDecimal((double)tender.tenderAmountUponAssignment *0.15);
+                var thirty= Convert.ToDecimal((double)tender.tenderAmountUponAssignment *0.30);
+                var amount = change.ChangeOrderAmount;
             if (amount <= fourth)
                 {resultF = true;}
             else if (amount > fourth && amount <= thirty)
                 {resultT = true;}
             else { result = true; }
         }
-        catch (Exception ex)
+       catch (Exception ex)
             {
                 Console.WriteLine(ex.InnerException.Message.ToString());
             }
