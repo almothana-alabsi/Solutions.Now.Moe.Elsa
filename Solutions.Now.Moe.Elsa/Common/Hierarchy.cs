@@ -33,6 +33,7 @@ namespace Solutions.Now.Moe.Elsa.Common
 
         //مديرية الشؤون الفنية والادارية
         public const int DirectorateofTechnicalandAdministrativeAffairs = 4825;
+        public const int Architectural = 3640;
 
 
     }

@@ -62,21 +62,21 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[0] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
                 userNameDB[1] = users.username;
-                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead);
-                //userNameDB[2] = users.username;
-                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG);
-                //userNameDB[3] = users.username;
-                //if (committee.TenderSerial != null)
-                //{
-                //    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
-                //    userNameDB[2] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead);
+                userNameDB[2] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG);
+                userNameDB[3] = users.username;
+                if (committee.TenderSerial != null)
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
+                    userNameDB[2] = users.username;
 
-                //}
-                //    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(x => x.position == Positions.Architect );
-                //if (users != null)
-                //{
-                //    userNameDB[2] = users.username;
-                //}
+                }
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(x => x.position == Positions.Architect);
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
 
 
 

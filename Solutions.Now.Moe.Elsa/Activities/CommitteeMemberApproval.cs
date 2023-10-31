@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Microsoft.EntityFrameworkCore;
+using Solutions.Now.Moe.Elsa.Common;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -40,6 +42,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
         {
             List<string> committeemember = new List<string>();
             HashSet<string> userNameDB = new HashSet<string>();
+            TblUsers user;
+            int idx = -1;
             List<CommitteeMember> committeeMembers = _moeDBContext.CommitteeMember.AsQueryable().Where(s => s.committeeSerial == RequestSerial).ToList<CommitteeMember>();
             try
             {
@@ -47,12 +51,20 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 {
                     if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
                     {
-                        //TblUsers users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username == committeeMember[i].userName);
+                        if (idx == -1)
+                        {
+                            user = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username == committeeMembers[i].userName);
+                            if(user.Major == Hierarchy.Architectural)
+                            {
+                                idx = i;
+                            }
+                        }
                         committeemember.Add(committeeMembers[i].userName);
-
                     }
-
                 }
+                string temp = committeemember[idx];
+                committeemember[idx] = committeemember[0];
+                committeemember[0] = temp;
             }
             catch (Exception ex)
             {
