@@ -57,41 +57,45 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
+
                 var invoicesPayment = await _ConstructionDBContext.InvoicesPayment.FirstOrDefaultAsync(x => x.Serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[0] = users.username;
                 //رئيس قسم الابنية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[1] = users.username;
                 }
                 //رئيس اللجنة
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[4] = committeeCaptain.userName;
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == invoicesPayment.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                if (users != null)
+                {
+                    userNameDB[4] = committeeCaptain.userName;
+                }
                 // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/  u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[2] = users.username;
                 }
                 // رئيس قسم الرقابة الداخلية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[3] = users.username;
                 }
 
                 //مدير الشؤون الادارية والمالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
                     userNameDB[5] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.position == Positions.AdministrationHead);
                 if (users != null)
                 {
                     userNameDB[6] = users.username;
@@ -100,8 +104,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = users.username;
                 //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                userNameDB[8] = CommunicationEng.userName;
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == invoicesPayment.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                if (users != null)
+                {
+                    userNameDB[8] = CommunicationEng.userName;
+                }
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[9] = users.username;
@@ -118,7 +125,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[13] = users.username;
                 //المحاسب
-                //userNameDB[14] = contractorStaff.Accountant;
+                userNameDB[14] = invoicesPayment.accountant;
             }
             catch (Exception ex)
             {

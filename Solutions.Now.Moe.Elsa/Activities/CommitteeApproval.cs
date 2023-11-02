@@ -43,7 +43,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screens = new List<string>();
-            List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Committee && s.type == WorkFlowType.WorkflowType).OrderBy(s => s.step).ToList<WorkFlowRules>();
+            List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Committee   && s.type == WorkFlowType.WorkflowType).OrderBy(s => s.step).ToList<WorkFlowRules>();
             TblUsers users;
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -66,14 +66,25 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[2] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG);
                 userNameDB[3] = users.username;
-
                 if (committee.TenderSerial != null)
                 {
                     users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
-                    userNameDB[4] = users.username;
+                    userNameDB[2] = users.username;
 
                 }
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(x => x.position == Positions.Architect);
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
 
+
+
+                //var committeeMemberArchitectural = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.Architect);
+                //if (committeeMemberArchitectural != null)
+                //{
+                //    userNameDB[2] = committeeMemberArchitectural.userName;
+                //}
             }
             catch (Exception ex)
             {

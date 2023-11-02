@@ -12,7 +12,7 @@ namespace Solutions.Now.Moe.Elsa.Common
         // ادارة الشؤون المالية
         public const int AdminstratorFinancial = 4718;
         // مديرية الحسابات
-        public const int AccountsDirectorate = 4719;
+        public const int AccountsDirectorate = 4718;
         public const int ExpenseSection = 4720;
         public const int maintenanceDepartment = 4732;
         public const int maintenanceSection = 4733;
@@ -33,6 +33,7 @@ namespace Solutions.Now.Moe.Elsa.Common
 
         //مديرية الشؤون الفنية والادارية
         public const int DirectorateofTechnicalandAdministrativeAffairs = 4825;
+        public const int Architectural = 3640;
 
 
     }

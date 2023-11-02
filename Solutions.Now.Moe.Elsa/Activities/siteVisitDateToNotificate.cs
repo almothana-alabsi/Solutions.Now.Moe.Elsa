@@ -40,7 +40,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
 
-            var x = _moeDBContext.SiteVisit.OrderBy(x=>x.Serial).FirstOrDefault(x=>x.Serial == RequestSerial).visitDate;
+            var x = _moeDBContext.SiteVisit.FirstOrDefault(x=>x.Serial == RequestSerial)?.visitDate;
             var y = x?.ToString("yyyy-MM-dd");
             var t = y + "T"+ Time + "+03:00";
             context.Output = t;

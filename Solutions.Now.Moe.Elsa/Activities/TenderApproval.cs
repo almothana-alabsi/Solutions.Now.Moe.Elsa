@@ -59,7 +59,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[0] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username.Equals(referedTender.assignedEngineer));
-                userNameDB[1] = (users == null) ? "NoEngineer" : users.username;
+                userNameDB[1]  = (users == null) ? "NoEngineer" : users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
                 userNameDB[2] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.maintenanceSection && u.position == Positions.sectionHead);
@@ -74,7 +74,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[8] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead);
                 userNameDB[9] = users.username;
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.AccountsDirectorate && u.position == Positions.DirectorateHead);
+                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.AccountsDirectorate && u.position == Positions.DirectorateHead);
                 userNameDB[10] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead);
                 userNameDB[11] = users.username;
