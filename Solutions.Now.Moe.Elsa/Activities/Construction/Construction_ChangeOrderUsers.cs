@@ -42,9 +42,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_Paymentforcompletion).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_ChangeOrder).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
-          var positionUser = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == RequestSender).position;
+      //   var positionUser = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == RequestSender).position;
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -69,8 +69,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[1] = committeeCaptain.userName;
-               
+                if (users != null)
+                {
+                    userNameDB[1] = committeeCaptain.userName;
+                }
                 ////مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
@@ -85,11 +87,17 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
-                userNameDB[5] =userNameDB[8] = userNameDB[15]=users.username;
+                if (users != null)
+                {
+                    userNameDB[5] = userNameDB[8] = userNameDB[15] = users.username;
+                }
                //مهندس اتصال
                 var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x =>x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                userNameDB[6] = userNameDB[19]= CommunicationEng.userName;
-                //رئيس قسم متابعة تنفيذ المشاريع المحلية
+                if (users != null)
+                {
+                    userNameDB[6] = userNameDB[19] = CommunicationEng.userName;
+                }
+                    //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = userNameDB[14] =users.username;
                 
@@ -124,6 +132,6 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             };
             context.Output = infoX;
             return Done();
-        }
+        }   
     }
 }
