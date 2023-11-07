@@ -12,6 +12,7 @@ using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -78,7 +79,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[10] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead);
                 userNameDB[11] = users.username;
-              
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
+                userNameDB[14] = users.username;
             }
             catch (Exception ex)
             {
@@ -98,3 +100,4 @@ namespace Solutions.Now.Moe.Elsa.Activities
         }
     }
 }
+
