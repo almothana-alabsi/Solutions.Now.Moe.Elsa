@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Solutions.Now.Moe.Elsa.Activities;
+using Solutions.Now.Moe.Elsa.Models.Construction;
 
 namespace Solutions.Now.Moe.Elsa.Models
 {
@@ -23,6 +24,7 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<projectStoppedTable> ProjectStoppedTable { get; set; }
         public DbSet<ResumeProjectWork> ResumeProjectWork { get; set; }
         public DbSet<FinancialRequest> FinancialRequest { get; set; }
+        public DbSet<Construction_Timedemands> Timedemands { get; set; }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
