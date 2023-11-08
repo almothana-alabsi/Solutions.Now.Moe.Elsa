@@ -50,13 +50,13 @@ namespace Solutions.Now.Moe.Elsa.Activities
             List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_InitialReceipt).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
 
-            for (int i = 0; i < workFlowRules.Count; i++)
-            {
+                for (int i = 0; i < workFlowRules.Count; i++)
+                {
 
-                userNameDB.Add(workFlowRules[i].username);
-                steps.Add(workFlowRules[i].step);
-                Screen.Add(workFlowRules[i].screen);
-            }
+                    userNameDB.Add(workFlowRules[i].username);
+                    steps.Add(workFlowRules[i].step);
+                    Screen.Add(workFlowRules[i].screen);
+                }
 
             try
             {

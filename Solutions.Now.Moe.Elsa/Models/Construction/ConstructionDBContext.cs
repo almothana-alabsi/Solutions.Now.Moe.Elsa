@@ -41,6 +41,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_SubmissionApprovalQualityControlProjectSamples> SubmissionApprovalQualityControlProjectSamples { get; set; }
         public DbSet<InvoicesPayment> InvoicesPayment { get; set; }
         public DbSet<Construction_MonthlyReport> WorkScheduleMonthlyReport { get; set; }
+        public DbSet<Construction_releasereservations> Releasereservations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

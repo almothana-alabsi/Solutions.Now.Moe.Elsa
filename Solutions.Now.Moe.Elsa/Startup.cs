@@ -129,6 +129,7 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<construcion_CommunicationEngineersGlobal>()
                      .AddActivity<Construction_WorkScheduleMonthlyReportUsers>()
                      .AddActivity <Construction_FinalPayment>()   
+                     .AddActivity<Construction_AccountantUsers>()
 
 
                      .AddHttpActivities(elsaSection.GetSection("Server").Bind)
