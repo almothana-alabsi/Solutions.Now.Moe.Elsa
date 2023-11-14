@@ -74,7 +74,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                 if (committeeCaptain != null)
                 {
-                    userNameDB[2] = committeeCaptain.userName;
+                    userNameDB[2] = userNameDB[10] = committeeCaptain.userName;
                 }
                 ////مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
@@ -124,7 +124,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[21] = users.username;
                 //المحاسب
-                userNameDB[22] = invoicesPayment.accountant;
+                if (invoicesPayment.accountant != null)
+                {
+                    userNameDB[22] = invoicesPayment.accountant;
+                }
             }
             catch (Exception ex)
             {
