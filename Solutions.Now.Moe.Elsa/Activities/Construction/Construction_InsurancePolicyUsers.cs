@@ -80,7 +80,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[4] = users.username;
                 }
                 //مدير مديرية الحسابات
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.AdminstratorFinancial && u.position == Positions.DirectorateHead && u.organization == 2);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.AccountsDirectorate && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[6] = users.username;
                 //رئيس قسم النفقات والمخصصات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
