@@ -54,7 +54,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
           }
           try
           {
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
+                var AdoptionMaterials = await _ConstructionDBContext.AdoptionMaterials.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == AdoptionMaterials.tenderSerial);
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[0] = users.username;

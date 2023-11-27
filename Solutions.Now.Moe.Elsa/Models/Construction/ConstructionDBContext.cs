@@ -16,6 +16,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_delegateDirectorEducationWithEngineerPermissions> DelegateDirectorEducationWithEngineerPermissions { get; set; }
         public DbSet<Tender> Tender { get; set; }
         public DbSet<Construction_CommunicationEngineer> CommunicationEngineers { get; set; }
+        public DbSet<AdoptionMandatory> AdoptionMaterials { get; set; }
         public DbSet<Construction_SupervisionCommittee> SupervisionCommittee { get; set; }
         public DbSet<Construction_SiteHandOver> SiteHandOver { get; set; }
         public DbSet<Construction_DirectOrderToTheContractor> DirectOrderToTheContractor { get; set; }
