@@ -90,9 +90,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[4] = users.username;
                 }
 
-                ////مهندس اتصال
-                //var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                //userNameDB[5] = CommunicationEng.userName;
+                //مهندس اتصال
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                userNameDB[5] = CommunicationEng.userName;
 
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
