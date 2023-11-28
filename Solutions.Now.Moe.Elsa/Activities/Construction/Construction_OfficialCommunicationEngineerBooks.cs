@@ -76,6 +76,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //الامين العام للشؤون الادارية والمالية 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
                 userNameDB[4] = users.username;
+                //وزير 
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Ministersoffice && u.organization == 2);
+                userNameDB[5] = users.username;
             }
             catch (Exception ex)
             {
