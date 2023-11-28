@@ -61,10 +61,10 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     Screen.Add(workFlowRules[i].screen);
                 }
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Hierarchy.Consultant);
-                userNameDB[0] = userNameDB[11] = userNameDB[12] = userNameDB[13] = userNameDB[14] = userNameDB[15] = userNameDB[18] = users.username;
+                userNameDB[0] = users.username;
 
                 var committeeMemberArchitectural = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.Architect);
-                userNameDB[1] = committeeMemberArchitectural.userName;
+                userNameDB[1] = userNameDB[6] = committeeMemberArchitectural.userName;
 
                 var committeeMemberCivilEngineer = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.CivilEngineer);
                 userNameDB[2] = committeeMemberCivilEngineer.userName;
@@ -81,11 +81,11 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     userNameDB[5] = committeeMemberSurveyEng.userName;
                 };
 
-                var committeeMemberQuantitySurveyor = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.QuantitySurveyor);
-                userNameDB[16] = committeeMemberQuantitySurveyor.userName;
-
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
-                userNameDB[6] = userNameDB[7] = userNameDB[8] = userNameDB[9] = userNameDB[6] = userNameDB[10] = userNameDB[17] = users.username;
+                userNameDB[7] = users.username;
+
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
+                userNameDB[8] = users.username;
             }
             catch (Exception ex)
             {
@@ -98,7 +98,6 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 name = userNameDB,
                 Screens = Screen,
                 stage = Stage
-
             };
             context.Output = infoX;
             return Done();
