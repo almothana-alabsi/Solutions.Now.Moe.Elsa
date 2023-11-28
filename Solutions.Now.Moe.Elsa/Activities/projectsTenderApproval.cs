@@ -83,6 +83,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[7] = users.username;
+
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
+                userNameDB[8] = users.username;
             }
             catch (Exception ex)
             {
@@ -95,7 +98,6 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 name = userNameDB,
                 Screens = Screen,
                 stage = Stage
-
             };
             context.Output = infoX;
             return Done();
