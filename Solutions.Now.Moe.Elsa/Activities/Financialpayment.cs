@@ -45,9 +45,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
             try
             {
                 List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.FinancialpaymenttoCounsultant && s.type == WorkFlowType.WorkflowType).OrderBy(s => s.step).ToList<WorkFlowRules>();
-                FinancialRequest financialRequest = await _moeDBContext.FinancialRequest.FirstOrDefaultAsync(i => i.serial == RequestSerial);
-                ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(s => s.Serial.ToString().Equals(financialRequest.tenderSerial.ToString()));
-                ReferedTender refTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(r => r.Serial == financialRequest.tenderSerial);
+                Invoice invoice = await _moeDBContext.Invoice.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
+                ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(r => r.Serial == invoice.tenderSerial);
                 Committee committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.TenderSerial == referedTender.Serial);
                 CommitteeMember committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i =>  i.committeeSerial == committee.Serial && i.capten == 1 );
                 for (int i = 0; i < workFlowRules.Count; i++)
@@ -58,7 +57,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     Screen.Add(workFlowRules[i].screen);
                 }
                 //consultant
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == refTender.Consultant && u.position == Hierarchy.Consultant);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Hierarchy.Consultant);
                 userNameDB[0] = users.username;
                 //architect
                 //CommitteeMember com = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.capten == 1);

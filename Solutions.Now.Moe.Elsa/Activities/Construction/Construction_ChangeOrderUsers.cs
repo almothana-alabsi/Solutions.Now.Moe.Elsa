@@ -112,7 +112,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 //الوزير
 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Ministersoffice && u.organization == 2);
-                userNameDB[10] = userNameDB[18] =users.username;
+                userNameDB[11] = userNameDB[18] =users.username;
 
 
 

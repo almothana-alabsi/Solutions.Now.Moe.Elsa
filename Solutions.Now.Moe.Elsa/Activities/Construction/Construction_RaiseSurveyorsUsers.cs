@@ -76,9 +76,12 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 {
                     userNameDB[2] = users.username;
                 }
-                //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
-                userNameDB[3] = users.username;
+                ////مدير الشؤون الادارية والمالية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
+                if (users != null)
+                {
+                    userNameDB[3] = users.username;
+                }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
                 if (users != null)

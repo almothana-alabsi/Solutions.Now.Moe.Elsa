@@ -72,12 +72,12 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[1] = committeeCaptain.userName;
                 }
                 //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == WorkScheduleMonthlyReport.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                if (users != null)
-                {
-                    userNameDB[0] = CommunicationEng.userName;
-                }
-               
+                //var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == WorkScheduleMonthlyReport.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                //if (users != null)
+                //{
+                //    userNameDB[2] = CommunicationEng.userName;
+                //}
+
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 Screens = Screen,
                 RequestSender = RequestSender,
             };
-            context.Output = infoX;
+            context.Output = infoX; 
 
             return Done();
         }

@@ -18,17 +18,17 @@ namespace Solutions.Now.Moe.Elsa.Activities
 {
     [Activity(
        Category = "Construction",
-       DisplayName = "   Construction_OfficialCommunicationEngineerBooks",
-       Description = "Construction_OfficialCommunicationEngineerBooks in WorkflowRules Table",
+       DisplayName = "   Construction_OfficialCommunicationSiteEngOrCaptainCommittee",
+       Description = "Construction_OfficialCommunicationSiteEngOrCaptainCommittee in WorkflowRules Table",
        Outcomes = new[] { OutcomeNames.Done }
    )]
-    public class Construction_OfficialCommunicationEngineerBooks : Activity
+    public class Construction_OfficialCommunicationSiteEngOrCaptainCommittee : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public Construction_OfficialCommunicationEngineerBooks(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public Construction_OfficialCommunicationSiteEngOrCaptainCommittee(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
@@ -46,7 +46,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_OfficialCommunicationEngineerBooks).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_OfficialSiteEngOrCaptainCommittee).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
@@ -62,23 +62,27 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == officialBooks.tenderSerial);
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == officialBooks.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
 
-                //مهندس اتصال
                 userNameDB[0] = RequestSender;
-                //رئيس قسم متابعة تنفيذ المشاريع المحلية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
-                userNameDB[1] = users.username;
-                //مدير مديرية الشؤون الهندسية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
-                userNameDB[2] = users.username;
-                //مدير ادارة الابنية والمشاريع الدولية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
-                userNameDB[3] = users.username;
-                //الامين العام للشؤون الادارية والمالية 
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
-                userNameDB[4] = users.username;
-                //وزير 
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Ministersoffice && u.organization == 2);
-                userNameDB[5] = users.username;
+                //رئيس قسم الابنية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead && u.organization == Organization.MOE);
+                if (users != null)
+                {
+                    userNameDB[1] = users.username;
+                }
+
+                ////مدير الشؤون الادارية والمالية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
+                //مدير مديرية التربية والتعليم
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
+                if (users != null)
+                {
+                    userNameDB[3] = users.username;
+                }
+
             }
             catch (Exception ex)
             {

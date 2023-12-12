@@ -116,7 +116,7 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_ApprovalBooksByContractor>()
                      .AddActivity<Construction_SiteNote>()
                      .AddActivity<Construction_DailyWorkflow>()
-                             .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                     .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                      .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                      .AddActivity<Construction_DefectsLiabilityContractorDurationPartial>()
                      .AddActivity<Construction_BidCancellation>()
@@ -127,6 +127,8 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<construcion_CommunicationEngineersGlobal>()
                      .AddActivity<Construction_WorkScheduleMonthlyReportUsers>()
                      .AddActivity <Construction_FinalPayment>()   
+                     .AddActivity<Construction_AccountantUsers>()
+                     .AddActivity<Construction_OfficialCommunicationSiteEngOrCaptainCommittee>()
 
 
                      .AddHttpActivities(elsaSection.GetSection("Server").Bind)

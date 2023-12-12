@@ -26,7 +26,9 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<FinancialRequest> FinancialRequest { get; set; }
         public DbSet<Construction_Timedemands> Timedemands { get; set; }
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<Invoice> Invoice { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 modelBuilder.HasDefaultSchema("DesignReview");
             }
