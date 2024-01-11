@@ -107,19 +107,19 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
-                if (CommunicationEng != null)
+                if (users != null)
                 {
                     userNameDB[7] = users.username;
                 }
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
-                if (CommunicationEng != null)
+                if (users != null)
                 {
                     userNameDB[8] = users.username;
                 }
                 //مدير ادارة الابنية والمشاريع الدولية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
-                if (CommunicationEng != null)
+                if (users != null)
                 {
                     userNameDB[9] = users.username;
                 }
@@ -132,7 +132,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 }
                 // رئيس اللجنة للمشروع
                 var CaptinCommittee = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial &&x.projectSerial==initialreceipt.projectSerial&& x.type == WorkFlowsName.Construction_InitialReceipt && x.captain == 1);
-                if (users != null)
+                if (CaptinCommittee != null)
                 {
                     userNameDB[6]  = userNameDB[16] = CaptinCommittee.userName;
                 }

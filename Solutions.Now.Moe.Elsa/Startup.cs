@@ -130,7 +130,7 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_AccountantUsers>()
                      .AddActivity<Construction_OfficialCommunicationSiteEngOrCaptainCommittee>()
 
-
+                      .AddActivity<Construction_CommitteeInitialReceipt>()
                      .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                      .AddQuartzTemporalActivities()
                      .AddWorkflowsFrom<Startup>()

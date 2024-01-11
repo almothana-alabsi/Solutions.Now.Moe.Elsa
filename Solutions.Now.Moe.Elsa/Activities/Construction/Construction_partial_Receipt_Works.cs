@@ -94,7 +94,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
                 }// رئيس اللجنة للمشروع
                 var CaptinCommittee = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_partial_Receipt_Works && x.captain == 1);
-                if (users != null)
+                if (CaptinCommittee != null)
                 {
                     userNameDB[6] = userNameDB[17] = CaptinCommittee.userName;
                 }
@@ -107,7 +107,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 }
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                if (users != null)
+                if (committeeCaptain != null)
                 {
                     userNameDB[8] = userNameDB[13] = committeeCaptain.userName;
 
