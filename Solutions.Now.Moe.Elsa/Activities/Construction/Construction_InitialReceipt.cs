@@ -101,7 +101,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
                 if (CommunicationEng != null)
                 {
-                    userNameDB[6] = committeeCaptain.userName;
+                    userNameDB[6] = CommunicationEng.userName;
 
                 }
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
