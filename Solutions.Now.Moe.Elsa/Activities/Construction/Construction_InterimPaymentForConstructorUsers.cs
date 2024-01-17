@@ -75,13 +75,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[4] = committeeCaptain.userName;
                 }
                 // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == 1237 && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[2] = users.username;
                 }
                 // رئيس قسم الرقابة الداخلية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == 1237 && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[3] = users.username;
@@ -94,7 +94,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[5] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor &&u.position == Positions.AdministrationHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
                 if (users != null)
                 {
                     userNameDB[6] = users.username;
@@ -103,7 +103,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = users.username;
                 //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial==invoicesPayment.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == invoicesPayment.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
                 if (users != null)
                 {
                     userNameDB[8] = CommunicationEng.userName;
@@ -112,7 +112,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[9] = users.username;
                 //مدير ادارة الابنية والمشاريع الدولية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u =>u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[10] = users.username;
                 //مدير ادارة الشؤون المالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
@@ -143,4 +143,3 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         }
     }
 }
-

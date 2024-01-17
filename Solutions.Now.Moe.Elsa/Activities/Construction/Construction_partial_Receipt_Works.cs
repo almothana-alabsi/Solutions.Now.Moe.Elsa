@@ -65,7 +65,11 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
 
                 userNameDB[0] = RequestSender;
-
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                if (users != null)
+                {
+                    userNameDB[7] = userNameDB[12] = users.username;
+                }
                 //مهندس اتصال
                 var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
                 if (CommunicationEng != null)

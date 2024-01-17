@@ -134,7 +134,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 var CaptinCommittee = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial &&x.projectSerial==initialreceipt.projectSerial&& x.type == WorkFlowsName.Construction_InitialReceipt && x.captain == 1);
                 if (CaptinCommittee != null)
                 {
-                    userNameDB[6]  = userNameDB[16] = CaptinCommittee.userName;
+                    userNameDB[11]  = userNameDB[16] = CaptinCommittee.userName;
                 }
             }
             catch (Exception ex)
