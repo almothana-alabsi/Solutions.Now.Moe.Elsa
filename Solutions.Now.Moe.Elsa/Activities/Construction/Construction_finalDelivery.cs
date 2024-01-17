@@ -61,37 +61,49 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
             try
             {
-                var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
+                var contractorStaff = await _ConstructionDBContext.FinalReceiptWork.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+               
+                    var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
                 //المقاول
                 userNameDB[0] = RequestSender;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                if (users != null)
+                {
+                    userNameDB[12] = userNameDB[0] = users.username;
+                }
                 //رئيس اللجنة
-                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[1] = committeeCaptain.userName;
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                if (committeeCaptain != null)
+                {
+                    userNameDB[1] = userNameDB[14] = userNameDB[15] = committeeCaptain.userName;
+                }
                 //رئيس قسم الابنية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead && u.organization == Organization.MOE);
                 if (users != null)
                 {
-                    userNameDB[2] = users.username;
+                    userNameDB[2] = userNameDB[16] = users.username;
                 }
                 //مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
-                    userNameDB[3] = users.username;
+                    userNameDB[3] = userNameDB[17] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
                 if (users != null)
                 {
-                    userNameDB[4] = users.username;
+                    userNameDB[4] = userNameDB[18] = users.username;
                 }
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[5] = users.username;
                 //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                userNameDB[6] = committeeCaptain.userName;
+                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                if (CommunicationEng !=null)
+                {
+                    userNameDB[6] = CommunicationEng.userName;
+                }
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = users.username;

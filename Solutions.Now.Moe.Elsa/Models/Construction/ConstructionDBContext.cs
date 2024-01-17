@@ -38,6 +38,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_DailyWorkProgressReport> DailyWorkProgressReport { get; set; }
         public DbSet<Construction_partialTakeOver> partialTakeOver { get; set; }
         public DbSet<Construction_Non_complianceWithActionsCorrectiveActionsDB> MatchingCorrectiveAction { get; set; }
+        public DbSet<Construction_finalDeliveryDB> FinalReceiptWork { get; set; }
 
         public DbSet<Construction_SubmissionApprovalQualityControlProjectSamples> SubmissionApprovalQualityControlProjectSamples { get; set; }
         public DbSet<InvoicesPayment> InvoicesPayment { get; set; }
