@@ -42,7 +42,7 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
 
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request Serial.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int RequestSerial { get; set; }
-        public int? durations { get; set; }
+        public int? finalDuration { get; set; }
 
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
@@ -63,32 +63,34 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
             }
             try
             {
-                var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var contractorStaff = await _ConstructionDBContext.FinalReceiptWork.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
                 //رئيس اللجنة
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[10] = committeeCaptain.userName;
+                userNameDB[1] = userNameDB[14] = userNameDB[15] = committeeCaptain.userName;
                 //رئيس قسم الابنية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead && u.organization == Organization.MOE);
                 if (users != null)
                 {
-                    userNameDB[11] = users.username;
+                    userNameDB[16] = users.username;
                 }
                 //مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
-                    userNameDB[12] = users.username;
+                    userNameDB[17] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
                 if (users != null)
                 {
-                    userNameDB[13] = users.username;
+                    userNameDB[18] = users.username;
                 }
 
                 var headCommittee = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_finalDelivery && x.captain == 1);
-                userNameDB[14] = committeeCaptain.userName;
+                userNameDB[19] = committeeCaptain.userName;
+
+                var finalDuration = await _ConstructionDBContext.detailsOfFinalReceiptCommittee.FirstOrDefaultAsync(c => c.finalReceiptSerial == RequestSerial);
 
             }
             catch (Exception ex)
@@ -96,7 +98,7 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
                 ex.Message.ToString();
             }
 
-            context.Output = durations;
+            context.Output = finalDuration;
             return Done();
         }
 
