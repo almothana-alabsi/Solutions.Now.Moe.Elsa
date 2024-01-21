@@ -68,7 +68,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[0] = RequestSender;
                
                     users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                if (users == null) {
+                if (users != null) {
                     userNameDB[0] = users.username;
                 }
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
