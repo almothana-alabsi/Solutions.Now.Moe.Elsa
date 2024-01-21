@@ -113,6 +113,13 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //مدير ادارة الابنية والمشاريع الدولية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[9] = users.username;
+                //الامين العام للشؤون الادارية والمالية 
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[10] = users.username;
+
+                }
             }
             catch (Exception ex)
             {

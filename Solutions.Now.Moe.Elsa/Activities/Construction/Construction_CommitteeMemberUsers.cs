@@ -51,7 +51,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             {
                 if (section == null && tenderSerial == null)
             {
-                var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.projectSerial == RequestSerial && c.type == workflowType).ToListAsync();
+                var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType).ToListAsync();
                 for (int i = 0; i < committeeMembers.Count; i++)
                 {
                     if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
@@ -65,7 +65,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             }
             else if (section != null && tenderSerial == null)
             {
-                var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.projectSerial == RequestSerial && c.type == workflowType && c.section == section).ToListAsync();
+                var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType && c.section == section).ToListAsync();
 
                 for (int i = 0; i < committeeMembers.Count; i++)
                 {
