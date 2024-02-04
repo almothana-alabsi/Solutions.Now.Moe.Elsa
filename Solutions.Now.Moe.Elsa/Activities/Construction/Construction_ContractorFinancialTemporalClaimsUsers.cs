@@ -57,7 +57,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                var invoicesPayment = await _ConstructionDBContext.InvoicesPayment.FirstOrDefaultAsync(x => x.Serial == RequestSerial);
+                //var invoicesPayment = await _ConstructionDBContext.InvoicesPayment.FirstOrDefaultAsync(x => x.Serial == RequestSerial);
                 var Timedemands = await _ConstructionDBContext.Timedemands.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == Timedemands.tenderSerial);
                 // المقاول
@@ -117,17 +117,17 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 //مدير ادارة الشؤون المالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[19] = users.username;
-
+                //
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[20] = users.username;
-
+                //
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[21] = users.username;
                 //المحاسب
-                if (invoicesPayment.accountant != null)
+              /*  if (invoicesPayment.accountant != null)
                 {
                     userNameDB[22] = invoicesPayment.accountant;
-                }
+                }*/
             }
             catch (Exception ex)
             {
