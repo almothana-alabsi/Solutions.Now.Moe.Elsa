@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -43,7 +44,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_SiteNote).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_DailyWorkflow).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
@@ -56,16 +57,16 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                //var approvalOfDesignMixtures = await _ConstructionDBContext.ApprovalOfDesignMixtures.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                //var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == approvalOfDesignMixtures.tenderSerial);
+                var dailyWorkProgressReport = await _ConstructionDBContext.DailyWorkProgressReport.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == dailyWorkProgressReport.tenderSerial);
 
-                //// المقاول
-                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                //userNameDB[0] = users.username;
+                // المقاول
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                userNameDB[0] = users.username;
 
-                ////المهندس المشرف
-                //var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                //userNameDB[1] = committeeCaptain.userName;
+                //المهندس المشرف
+                var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                userNameDB[1] = committeeCaptain.userName;
 
 
 

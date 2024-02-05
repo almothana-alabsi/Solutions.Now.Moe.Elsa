@@ -12,9 +12,9 @@ using System.Linq;
 using Solutions.Now.Moe.Elsa.Models;
 using System;
 using Solutions.Now.Moe.Elsa.Common;
-using NetTopologySuite.GeometriesGraph;
 using Positions = Solutions.Now.Moe.Elsa.Common.Positions;
 using System.Runtime.Intrinsics.Arm;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {

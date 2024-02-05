@@ -11,5 +11,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
     [Key]
     public int? serial { get; set; }
     public int? tenderSerial { get; set; }
+        public int? projectSerial { get; set; }
+
     }
 }

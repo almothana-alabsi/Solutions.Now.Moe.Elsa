@@ -12,6 +12,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -99,8 +100,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = users.username;
                 //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                userNameDB[8] = committeeCaptain.userName;
+                var communicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                userNameDB[8] = communicationEng.userName;
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[9] = users.username;

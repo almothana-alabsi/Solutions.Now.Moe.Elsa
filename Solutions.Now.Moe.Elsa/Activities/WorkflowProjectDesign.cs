@@ -13,6 +13,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Common;
 using Amazon.IdentityManagement.Model;
 using MassTransit.RabbitMqTransport;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {

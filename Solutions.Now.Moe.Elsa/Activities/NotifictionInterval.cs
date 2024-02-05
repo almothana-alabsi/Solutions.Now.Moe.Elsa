@@ -67,6 +67,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
             IList<string> _userNameList = new List<string>();
             IList<string> _formsList = new List<string>();
             string word = "", _steps = (string)steps, _userName = (string)userNameDB, _forms = (string)forms;
+            if (string.IsNullOrWhiteSpace(_steps))
+                return Done();
             for (int i = 0; i < _steps.Length; i++)
             {
                 if (_steps[i].ToString().Equals(","))

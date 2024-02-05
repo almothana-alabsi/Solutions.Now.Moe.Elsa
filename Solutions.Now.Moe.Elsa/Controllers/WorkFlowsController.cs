@@ -48,7 +48,7 @@ namespace Solutions.Now.Moe.Elsa.Controllers
         }
 
 
-        [Route("RequestStage/{workflowName}/{id}/{stage}")]
+        [Route("Request/{workflowName}/{id}/{stage:int}")]
         [HttpGet]
         public async Task<IActionResult> RequestStage(string workflowName, int id, int stage)
         {

@@ -20,13 +20,13 @@ namespace Solutions.Now.Moe.Elsa.Activities
           Description = "Site Visit Date",
           Outcomes = new[] { OutcomeNames.Done }
       )]
-    public class siteVisitDateToNotificate : Activity
+    public class SiteVisitDateToNotificate : Activity
     {
         private readonly DesignReviewDBContext _DesignReviewDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public siteVisitDateToNotificate(DesignReviewDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public SiteVisitDateToNotificate(DesignReviewDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _DesignReviewDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
@@ -40,7 +40,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
 
-            var x = _moeDBContext.SiteVisit.FirstOrDefault(x=>x.Serial == RequestSerial).visitDate;
+            var x = _moeDBContext.SiteVisit.FirstOrDefault(x=>x.Serial == RequestSerial)?.visitDate;
             var y = x?.ToString("yyyy-MM-dd");
             var t = y + "T"+ Time + "+03:00";
             context.Output = t;

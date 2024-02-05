@@ -46,7 +46,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             try
             {
 
-                int committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.projectSerial == RequestSerial && c.type == workflowType).CountAsync();
+                int committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType).CountAsync();
 
                 context.Output = committeeMembers;
                 return Done();

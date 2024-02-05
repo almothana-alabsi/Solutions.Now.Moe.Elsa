@@ -60,7 +60,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             try
             {
 
-                Construction_detailsOfTakeOverCommittee warrantyMaintenanceWork = await _ConstructionDBContext.detailsOfTakeOverCommittee.AsQueryable().LastOrDefaultAsync(i => i.takeOverSerial == RequestSerial);
+                Construction_detailsOfTakeOverCommittee warrantyMaintenanceWork = await _ConstructionDBContext.detailsOfTakeOverCommittee.OrderBy(x=>x.serial).LastOrDefaultAsync(i => i.takeOverSerial == RequestSerial);
                 durations = warrantyMaintenanceWork.durationForMissingDataContractor;
 
             }

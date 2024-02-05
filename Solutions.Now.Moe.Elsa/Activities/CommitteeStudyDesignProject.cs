@@ -12,6 +12,7 @@ using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Common;
 using Amazon.CloudSearchDomain.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {

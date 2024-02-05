@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using Solutions.Now.Moe.Elsa.Common;
 using Elsa.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -55,7 +56,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             try
             {
 
-                    var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
+                    var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 10);
                     // المقاول
                     users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                     userNameDB[2] = users.username;
