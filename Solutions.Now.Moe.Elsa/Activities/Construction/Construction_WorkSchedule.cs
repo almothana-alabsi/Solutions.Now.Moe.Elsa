@@ -46,8 +46,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
-            {
-
+            {   
                 userNameDB.Add(workFlowRules[i].username);
                 steps.Add(workFlowRules[i].step);
                 Screen.Add(workFlowRules[i].screen);
