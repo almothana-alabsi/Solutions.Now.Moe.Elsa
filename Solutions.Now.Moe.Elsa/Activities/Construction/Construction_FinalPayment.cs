@@ -74,26 +74,26 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[4] = committeeCaptain.userName;
                 }
                 // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/  u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[2] = users.username;
                 }
                 // رئيس قسم الرقابة الداخلية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[3] = users.username;
                 }
 
                 //مدير الشؤون الادارية والمالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
                     userNameDB[5] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.position == Positions.AdministrationHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
                 if (users != null)
                 {
                     userNameDB[6] = users.username;
