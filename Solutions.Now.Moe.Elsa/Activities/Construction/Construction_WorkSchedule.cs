@@ -46,8 +46,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             TblUsers users;
 
             for (int i = 0; i < workFlowRules.Count; i++)
-            {
-
+            {   
                 userNameDB.Add(workFlowRules[i].username);
                 steps.Add(workFlowRules[i].step);
                 Screen.Add(workFlowRules[i].screen);
@@ -55,9 +54,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                var workSchedule = await _ConstructionDBContext.WorkSchedule.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial);
+                var workSchedule = await _ConstructionDBContext.WorkSchedule.FirstOrDefaultAsync(x => x.serial == RequestSerial);
 
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == workSchedule.tenderSerial);
+                var tender =  _ConstructionDBContext.Tender.FirstOrDefault(x => x.tenderSerial == workSchedule.tenderSerial);
 
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
