@@ -11,6 +11,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Solutions.Now.Moe.Elsa.Common;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -51,17 +52,34 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             {
                 if (section == null && tenderSerial == null)
             {
-                var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType).ToListAsync();
-                for (int i = 0; i < committeeMembers.Count; i++)
-                {
-                    if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
+                    if (workflowType == WorkFlowsName.Construction_ChangeOrder)
                     {
-                        //TblUsers users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username == committeeMember[i].userName);
-                        committeemember.Add(committeeMembers[i].userName);
+                        var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType && c.captain!=1).ToListAsync();
+                        for (int i = 0; i < committeeMembers.Count; i++)
+                        {
+                            if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
+                            {
+                                //TblUsers users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username == committeeMember[i].userName);
+                                committeemember.Add(committeeMembers[i].userName);
 
+                            }
+
+                        }
                     }
+                    else
+                    {
+                        var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType).ToListAsync();
+                        for (int i = 0; i < committeeMembers.Count; i++)
+                        {
+                            if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
+                            {
+                                //TblUsers users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username == committeeMember[i].userName);
+                                committeemember.Add(committeeMembers[i].userName);
 
-                }
+                            }
+
+                        }
+                    }
             }
             else if (section != null && tenderSerial == null)
             {
