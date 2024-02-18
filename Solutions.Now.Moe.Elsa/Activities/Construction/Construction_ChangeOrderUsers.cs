@@ -44,7 +44,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<string> Screen = new List<string>();
             List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_ChangeOrder).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
-      //   var positionUser = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == RequestSender).position;
+            int positionUser = 0;
+
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -55,10 +56,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             try
             {
                 var changeOreder = await _ConstructionDBContext.ChangeOrder.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == changeOreder.tenderSerial);
-        
-                
+                var user = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == changeOreder.requestBy);
+                positionUser = (int)user.position;
+
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[0] = users.username;
@@ -131,7 +132,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 name = userNameDB,
                 Screens = Screen,
                 RequestSender = RequestSender,
-                position =  3624//positionUser
+                position = positionUser
             };
             context.Output = infoX;
             return Done();
