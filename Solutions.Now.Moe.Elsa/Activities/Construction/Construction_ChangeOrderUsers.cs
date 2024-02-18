@@ -96,9 +96,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x =>x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
                 if (users != null)
                 {
-                    userNameDB[6] = userNameDB[19] = userNameDB[13] = CommunicationEng.userName;
+                    userNameDB[6] = userNameDB[19] = CommunicationEng.userName;
+                    //userNameDB[6] = userNameDB[19] = userNameDB[13] = CommunicationEng.userName;
+
                 }
-                    //رئيس قسم متابعة تنفيذ المشاريع المحلية
+                //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = userNameDB[14] =users.username;
                 
