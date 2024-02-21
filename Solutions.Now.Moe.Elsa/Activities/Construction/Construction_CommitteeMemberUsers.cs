@@ -118,11 +118,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             {
                 ex.Message.ToString();
             }
-            DataForRequestProject infoX = new DataForRequestProject
-            {
-                name = committeemember
-            };
-            context.Output = infoX;
+            context.Output = committeemember;
             return Done();
         }
     }

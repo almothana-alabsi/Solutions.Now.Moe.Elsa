@@ -45,6 +45,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request Serial.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int RequestSerial { get; set; }
+        [ActivityInput(Hint = "Enter an expression that evaluates to the  commitee.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
+        public int commitee { get; set; }
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
             try
