@@ -9,6 +9,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public decimal? ChangeOrderAmount { get; set; }
         public int? tenderSerial { get; set; }
         public int? projectSerial { get; set; }
+        public string? requestBy { get; set; }
 
 
     }
