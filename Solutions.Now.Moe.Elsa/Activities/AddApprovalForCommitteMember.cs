@@ -22,9 +22,10 @@ namespace Solutions.Now.Moe.Elsa.Activities
     public class AddApprovalForCommitteMember : Activity
     {
         private readonly MoeDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
-        public AddApprovalForCommitteMember(MoeDBContext MoeDBContext)
+        private readonly IConfiguration _configuration;
+        public AddApprovalForCommitteMember(MoeDBContext MoeDBContext,IConfiguration configuration)
         {
+            _configuration = configuration;
             _moeDBContext = MoeDBContext;
         }
 
@@ -99,8 +100,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     };
                     //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                     // await _cmis2DbContext.SaveChangesAsync();
-                    var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowDevStg23;Database=Moe;TrustServerCertificate=True;";
-                    SqlConnection connection = new SqlConnection(@connectionString);
+                    string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+                 //   var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowDevStg23;Database=Moe;TrustServerCertificate=True;";
+                    SqlConnection connection = new SqlConnection(connectionString);
                     if (refSerial != null)
                     {
                         string query = "INSERT INTO [Moe].[DesignReview].[ApprovalHistory] ([requestserial] ,[requestType] ,[createdDate],[actionBy],[expireDate],[status],[URL],[Form],[step],[refserial],[ActionDetails],createdBy) ";
