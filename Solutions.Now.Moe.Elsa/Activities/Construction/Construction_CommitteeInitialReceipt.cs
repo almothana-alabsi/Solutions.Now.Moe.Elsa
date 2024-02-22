@@ -44,7 +44,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         {
 
             try
-                {
+                { 
                 var captainCommittee = _ConstructionDBContext.CommitteeMember.FirstOrDefault(x => x.masterSerial == RequestSerial && x.type == workflowType && x.captain == 1);
                 context.Output = captainCommittee.userName;
             }

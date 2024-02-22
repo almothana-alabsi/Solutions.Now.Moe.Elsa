@@ -65,7 +65,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                             }
 
                         }
-                    }
+                    } 
                     else
                     {
                         var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType).ToListAsync();
