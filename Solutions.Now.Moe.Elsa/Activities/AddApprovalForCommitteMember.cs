@@ -22,9 +22,10 @@ namespace Solutions.Now.Moe.Elsa.Activities
     public class AddApprovalForCommitteMember : Activity
     {
         private readonly MoeDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
-        public AddApprovalForCommitteMember(MoeDBContext MoeDBContext)
+        private readonly IConfiguration _configuration;
+        public AddApprovalForCommitteMember(MoeDBContext MoeDBContext,IConfiguration configuration)
         {
+            _configuration = configuration;
             _moeDBContext = MoeDBContext;
         }
 
