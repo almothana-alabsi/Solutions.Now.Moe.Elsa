@@ -50,7 +50,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 Tender tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(s => s.tenderSerial.Equals(change.tenderSerial));
                 var fourth= Convert.ToDecimal((double)tender.tenderAmountUponAssignment *0.15);
                 var thirty= Convert.ToDecimal((double)tender.tenderAmountUponAssignment *0.30);
-                var amount = change.ChangeOrderAmount;
+                var amount = change.TheTotalEstimatedValueOfTheChangeOrder;
             if (amount <= fourth)
                 {resultF = true;}
             else if (amount > fourth && amount <= thirty)
