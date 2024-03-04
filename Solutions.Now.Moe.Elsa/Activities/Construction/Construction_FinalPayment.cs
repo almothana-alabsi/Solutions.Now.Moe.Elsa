@@ -62,7 +62,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[0] = users.username;
                 //رئيس قسم الابنية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[1] = users.username;
