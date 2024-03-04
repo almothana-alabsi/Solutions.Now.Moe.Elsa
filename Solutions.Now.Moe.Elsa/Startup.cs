@@ -136,6 +136,36 @@ namespace Solutions.Now.Moe.Elsa
                      .AddWorkflowsFrom<Startup>()
 
                  );
+                    .AddActivity<changeOrderType>()
+                    .AddActivity<Construction_InitialReceipt>()
+                    .AddActivity<Construction_partial_Receipt_Works>()
+                    .AddActivity<Construction_CountCommitteeUsers>()
+                    .AddActivity<Construction_ContractorMandatoryStaffUsers>()
+                    .AddActivity<Construction_ReleaseReservations>()
+                    .AddActivity<Construction_finalDelivery>()
+                    .AddActivity<ConstructionSendRequestWorkflowUsers>()
+                    .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
+                    .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
+                    .AddActivity<construcion_HeadOfficialBooksDepartment>()
+                           .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
+
+                    .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
+                            .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                    .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
+                    .AddActivity<DesignReview_ChangeOrder>()
+                    
+       
+
+
+                    .AddHttpActivities(elsaSection.GetSection("Server").Bind)
+                    .AddQuartzTemporalActivities()
+                    .AddWorkflowsFrom<Startup>()
+                   
+                );
 
             // Elsa API endpoints.
             services.AddElsaApiEndpoints();
