@@ -14,6 +14,7 @@ using System;
 using Esprima;
 using Solutions.Now.Moe.Elsa.Common;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -49,7 +50,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             TblUsers users;
             try
             {
-                List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.DesignReview_ChangeOrder && s.type == WorkFlowType.WorkflowType).OrderBy(s => s.step).ToList<WorkFlowRules>();
+                List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow ==55 && s.type == WorkFlowType.WorkflowType).OrderBy(s => s.step).ToList<WorkFlowRules>();
              
                 ChangeOrder changeOrder = await _moeDBContext.ChangeOrder.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
                 
@@ -75,7 +76,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.Directorate && u.Architecture == Tender.tenderArchitecture && u.position == Positions.Architect);
                 //userNameDB[1] = users.username;
                 //رئيس قسم الدراسات والتصميم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.OrderBy(s=>s.serial).FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[2] = users.username;
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);

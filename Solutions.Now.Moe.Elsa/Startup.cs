@@ -131,12 +131,7 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_OfficialCommunicationSiteEngOrCaptainCommittee>()
                      .AddActivity<Construction_CommitteememberEngineer>()
                       .AddActivity<Construction_CommitteeInitialReceipt>()
-                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
-                     .AddQuartzTemporalActivities()
-                     .AddWorkflowsFrom<Startup>()
-
-                 );
-                    .AddActivity<changeOrderType>()
+    .AddActivity<changeOrderType>()
                     .AddActivity<Construction_InitialReceipt>()
                     .AddActivity<Construction_partial_Receipt_Works>()
                     .AddActivity<Construction_CountCommitteeUsers>()
@@ -157,15 +152,16 @@ namespace Solutions.Now.Moe.Elsa
                             .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                     .AddActivity<DesignReview_ChangeOrder>()
-                    
-       
+
+
 
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
-                   
+
                 );
+
 
             // Elsa API endpoints.
             services.AddElsaApiEndpoints();
