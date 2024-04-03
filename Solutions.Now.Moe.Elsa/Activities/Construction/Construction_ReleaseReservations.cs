@@ -104,9 +104,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[8] = userNameDB[18] = users.username;
 
-                //الامين العام للشؤون الادارية والمالية 
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
-                userNameDB[9] = userNameDB[19] = users.username;
+                ////الامين العام للشؤون الادارية والمالية 
+                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
+                //userNameDB[9] = users.username;
 
                 //رئيس اللجنة
                 var Captaincommittee = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
