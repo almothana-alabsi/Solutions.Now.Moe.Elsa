@@ -130,8 +130,8 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_AccountantUsers>()
                      .AddActivity<Construction_OfficialCommunicationSiteEngOrCaptainCommittee>()
                      .AddActivity<Construction_CommitteememberEngineer>()
-                     .AddActivity<Construction_CommitteeInitialReceipt>()
-                    .AddActivity<changeOrderType>()
+                      .AddActivity<Construction_CommitteeInitialReceipt>()
+    .AddActivity<changeOrderType>()
                     .AddActivity<Construction_InitialReceipt>()
                     .AddActivity<Construction_partial_Receipt_Works>()
                     .AddActivity<Construction_CountCommitteeUsers>()
@@ -142,22 +142,27 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
                     .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
                     .AddActivity<construcion_HeadOfficialBooksDepartment>()
-                     .AddActivity<Construction_SiteNote>()
+                           .AddActivity<Construction_SiteNote>()
                     .AddActivity<Construction_DailyWorkflow>()
                     .AddActivity<Construction_ApprovalBooksByContractor>()
+
                     .AddActivity<Construction_SiteNote>()
                     .AddActivity<Construction_DailyWorkflow>()
                     .AddActivity<Construction_ApprovalBooksByContractor>()
-                     .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                            .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                     .AddActivity<DesignReview_ChangeOrder>()
-                    .AddActivity<DesignReviewCommiteMember>()
                     .AddActivity<ComitteeMemberNotfications>()
-                    .AddHttpActivities(elsaSection.GetSection("Server").Bind) 
-                    .AddQuartzTemporalActivities() 
-                    .AddWorkflowsFrom<Startup>() 
-                   
+
+
+
+
+                    .AddHttpActivities(elsaSection.GetSection("Server").Bind)
+                    .AddQuartzTemporalActivities()
+                    .AddWorkflowsFrom<Startup>()
+
                 );
+
 
             // Elsa API endpoints.
             services.AddElsaApiEndpoints();
@@ -178,7 +183,7 @@ namespace Solutions.Now.Moe.Elsa
             services.AddDbContext<ConstructionDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionMoe")));
 
             services.AddNotificationHandler<EvaluatingLiquidExpression, ConfigureLiquidEngine>();
-            services.AddHttpClient();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -189,8 +194,8 @@ namespace Solutions.Now.Moe.Elsa
                 app.UseDeveloperExceptionPage();
             }
             else
-            { 
-                app.UseExceptionHandler("/Error"); 
+            {
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

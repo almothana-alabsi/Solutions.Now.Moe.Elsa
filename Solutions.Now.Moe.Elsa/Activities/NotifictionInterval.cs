@@ -33,7 +33,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             _configuration = configuration; 
         }
 
-        
+
         [ActivityInput(Hint = "Enter an expression that evaluates to the Request serial.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int RequestSerial { get; set; }
 
@@ -58,7 +58,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
         public int? refSerial { get; set; }
         [ActivityInput(Hint = "Enter an expression that evaluates to the refserial.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
         public int? Stage { get; set; }
-        
+
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");

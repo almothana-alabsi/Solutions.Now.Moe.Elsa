@@ -54,7 +54,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 {
                     ChangeOrder changeOrders = await _moeDBContext.ChangeOrder.FirstOrDefaultAsync(x => x.Serial == RequestSerial);
                     //                    Committee committees = await _moeDBContext.Committee.AsAsyncEnumerable().Where(c => c.TenderSerial == changeOrders.tenderSerial && c.committeeType == workflowType).ToListAsync();
-                    Committee committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.TenderSerial == changeOrders.tenderSerial && i.committeeType==workflowType);
+                    Committee committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.TenderSerial == changeOrders.tenderSerial && i.committeeType == workflowType);
 
                     var committeeMembers = await _moeDBContext.CommitteeMember.AsAsyncEnumerable().Where(y => y.committeeSerial == committee.Serial).ToListAsync();
                     for (int i = 0; i < committeeMembers.Count; i++)
@@ -69,8 +69,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     }
                 }
 
-                
-            }  
+
+            }
             catch (Exception ex)
             {
                 ex.Message.ToString();

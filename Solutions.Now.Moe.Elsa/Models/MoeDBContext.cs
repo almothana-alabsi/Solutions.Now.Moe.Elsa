@@ -18,7 +18,7 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<CommitteeMember> CommitteeMember { get; set; }
         public DbSet<ProjectCancellation> ProjectCancellation { get; set; }
         public DbSet<ReferedTender> ReferedTender { get; set; }
-        public DbSet<VisitMember> visitMember { get; set; } 
+        public DbSet<VisitMember> visitMember { get; set; }
         public DbSet<SiteVisit> SiteVisit { get; set; }
         public DbSet<ProjectsTender> ProjectsTender {get; set;}
         public DbSet<projectStoppedTable> ProjectStoppedTable { get; set; }
