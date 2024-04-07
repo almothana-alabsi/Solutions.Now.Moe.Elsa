@@ -153,6 +153,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                     .AddActivity<DesignReview_ChangeOrder>()
                     .AddActivity<ComitteeMemberNotfications>()
+                    .AddActivity<SendRequestWorkflowUsers>()
 
 
 

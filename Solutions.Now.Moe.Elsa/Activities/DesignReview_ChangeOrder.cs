@@ -74,7 +74,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //المعماري
                 committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i => i.committeeSerial == committee.Serial && i.capten == 1);
 
-                userNameDB[1] = committeeMember.userName;
+                userNameDB[1] = userNameDB[7] = committeeMember.userName;
 
                 //رئيس قسم الدراسات والتصميم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
@@ -91,6 +91,17 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //الوزير 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Minister);
                 userNameDB[6] = users.username;
+
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == 200 && u.position == 3581);
+                userNameDB[8] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
+                userNameDB[9] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead);
+                userNameDB[10] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG);
+                userNameDB[11] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Minister);
+                userNameDB[12] = users.username;
             }
             catch (Exception ex)
             {
