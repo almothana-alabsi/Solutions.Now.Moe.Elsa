@@ -142,7 +142,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 try
                 {
 
-                   // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                   // var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowStg24@;Database=Moe";
                     SqlConnection connection = new SqlConnection(connectionString);
                     if (refSerial != null)
                     {

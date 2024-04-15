@@ -131,6 +131,7 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_OfficialCommunicationSiteEngOrCaptainCommittee>()
                      .AddActivity<Construction_CommitteememberEngineer>()
                       .AddActivity<Construction_CommitteeInitialReceipt>()
+                      .AddActivity<Construction__RaiseSurveyorsusersinRelevantcommunicationengineer>()
                      .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                      .AddQuartzTemporalActivities()
                      .AddWorkflowsFrom<Startup>()

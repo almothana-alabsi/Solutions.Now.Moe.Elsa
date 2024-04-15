@@ -11,5 +11,6 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public int? projectSerial { get; set; }
         public string? surveyCommittee { get; set; }
         public int? retinalMatchingWithContractualSchemes { get; set; }
+        public string? Relevantcommunicationengineer { get; set; }
     }
 }

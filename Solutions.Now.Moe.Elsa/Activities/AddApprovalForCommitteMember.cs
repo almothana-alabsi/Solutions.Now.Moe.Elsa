@@ -100,7 +100,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     };
                     //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                     // await _cmis2DbContext.SaveChangesAsync();
-                    var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe;TrustServerCertificate=True;";
+                    var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowStg24@;Database=Moe;TrustServerCertificate=True;";
                     SqlConnection connection = new SqlConnection(@connectionString);
                     if (refSerial != null)
                     {

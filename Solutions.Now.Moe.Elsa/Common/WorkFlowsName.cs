@@ -55,7 +55,8 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_QualityControl = 3797;
         public const int Construction_WorkScheduleMonthlyReportUsers = 5023;
         public const int Construction_ChangeOrder = 3795;
-        
+
+
 
 
     }       
