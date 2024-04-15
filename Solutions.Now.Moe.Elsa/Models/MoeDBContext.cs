@@ -27,6 +27,7 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<Construction_Timedemands> Timedemands { get; set; }
 
         public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<ChangeOrder> ChangeOrder { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

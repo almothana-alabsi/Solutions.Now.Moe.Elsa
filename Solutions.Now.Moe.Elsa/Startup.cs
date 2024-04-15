@@ -131,12 +131,39 @@ namespace Solutions.Now.Moe.Elsa
                      .AddActivity<Construction_OfficialCommunicationSiteEngOrCaptainCommittee>()
                      .AddActivity<Construction_CommitteememberEngineer>()
                       .AddActivity<Construction_CommitteeInitialReceipt>()
-                      .AddActivity<Construction__RaiseSurveyorsusersinRelevantcommunicationengineer>()
-                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
-                     .AddQuartzTemporalActivities()
-                     .AddWorkflowsFrom<Startup>()
+    .AddActivity<changeOrderType>()
+                    .AddActivity<Construction_InitialReceipt>()
+                    .AddActivity<Construction_partial_Receipt_Works>()
+                    .AddActivity<Construction_CountCommitteeUsers>()
+                    .AddActivity<Construction_ContractorMandatoryStaffUsers>()
+                    .AddActivity<Construction_ReleaseReservations>()
+                    .AddActivity<Construction_finalDelivery>()
+                    .AddActivity<ConstructionSendRequestWorkflowUsers>()
+                    .AddActivity<Construction_Non_complianceWithActionsCorrectiveActions>()
+                    .AddActivity<Construction_OfficialCommunicationEngineerBooks>()
+                    .AddActivity<construcion_HeadOfficialBooksDepartment>()
+                           .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
 
-                 );
+                    .AddActivity<Construction_SiteNote>()
+                    .AddActivity<Construction_DailyWorkflow>()
+                    .AddActivity<Construction_ApprovalBooksByContractor>()
+                            .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
+                    .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
+                    .AddActivity<DesignReview_ChangeOrder>()
+                    .AddActivity<ComitteeMemberNotfications>()
+                    .AddActivity<SendRequestWorkflowUsers>()
+
+
+
+
+                    .AddHttpActivities(elsaSection.GetSection("Server").Bind)
+                    .AddQuartzTemporalActivities()
+                    .AddWorkflowsFrom<Startup>()
+
+                );
+
 
             // Elsa API endpoints.
             services.AddElsaApiEndpoints();
