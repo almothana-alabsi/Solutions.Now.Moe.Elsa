@@ -154,6 +154,7 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<DesignReview_ChangeOrder>()
                     .AddActivity<ComitteeMemberNotfications>()
                     .AddActivity<SendRequestWorkflowUsers>()
+                      .AddActivity<Construction__RaiseSurveyorsusersinRelevantcommunicationengineer>()
 
 
 
