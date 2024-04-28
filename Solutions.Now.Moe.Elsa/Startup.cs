@@ -154,8 +154,11 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<DesignReview_ChangeOrder>()
                     .AddActivity<ComitteeMemberNotfications>() 
                     .AddActivity<SendRequestWorkflowUsers>()
-                     .AddActivity<Construction_TakOverComitteeFYI>() 
-                     .AddActivity<Construction_CommitteeSupervisorNotficatin>()
+                      .AddActivity<Construction__RaiseSurveyorsusersinRelevantcommunicationengineer>()
+
+
+
+
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
