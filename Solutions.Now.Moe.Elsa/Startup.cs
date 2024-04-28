@@ -152,12 +152,10 @@ namespace Solutions.Now.Moe.Elsa
                             .AddActivity<Construction_DefectsLiabilityContractorDurationInitialReceipt>()
                     .AddActivity<Construction_DefectsLiabilityContractorDurationFinal>()
                     .AddActivity<DesignReview_ChangeOrder>()
-                    .AddActivity<ComitteeMemberNotfications>()
+                    .AddActivity<ComitteeMemberNotfications>() 
                     .AddActivity<SendRequestWorkflowUsers>()
-
-
-
-
+                     .AddActivity<Construction_TakOverComitteeFYI>() 
+                     .AddActivity<Construction_CommitteeSupervisorNotficatin>()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
