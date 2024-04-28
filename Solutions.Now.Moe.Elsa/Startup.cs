@@ -157,7 +157,8 @@ namespace Solutions.Now.Moe.Elsa
                       .AddActivity<Construction__RaiseSurveyorsusersinRelevantcommunicationengineer>()
 
 
-
+                        .AddActivity<Construction_TakOverComitteeFYI>()
+                     .AddActivity<Construction_CommitteeSupervisorNotficatin>()
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
