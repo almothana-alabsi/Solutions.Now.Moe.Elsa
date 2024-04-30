@@ -26,6 +26,10 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<FinancialRequest> FinancialRequest { get; set; }
         public DbSet<Construction_Timedemands> Timedemands { get; set; }
 
+        public DbSet<Construction_InitialReceipt> initialReceipts { get; set; }
+        public DbSet<Construction_CommitteeMember> CommitteeMembers { get; set;}
+        public DbSet<Construction_InitialReceiptDB> Takeover { get; set; }
+
         public DbSet<Invoice> Invoice { get; set; }
         public DbSet<ChangeOrder> ChangeOrder { get; set; }
 

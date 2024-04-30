@@ -40,7 +40,7 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_Non_complianceWithActionsCorrectiveActionsDB> MatchingCorrectiveAction { get; set; }
         public DbSet<Construction_finalDeliveryDB> FinalReceiptWork { get; set; }
         public DbSet<Construction_detailsOfFinalReceiptCommittee> detailsOfFinalReceiptCommittee { get; set; }
-
+        public DbSet<Construction_detailsOfTakeOverCommitteeofshortcomming> detailsOfTakeOverCommitteeofshortcomming { get; set; }  
         public DbSet<Construction_SubmissionApprovalQualityControlProjectSamples> SubmissionApprovalQualityControlProjectSamples { get; set; }
         public DbSet<InvoicesPayment> InvoicesPayment { get; set; }
         public DbSet<Construction_MonthlyReport> WorkScheduleMonthlyReport { get; set; }
