@@ -48,6 +48,9 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_WorkScheduleDB> WorkSchedule { get; set; }
         public DbSet<Construction_WorkScheduleModifyDB> WorkScheduleModify { get; set; }
 
+        public DbSet<Construction_InitialReceipt> initialReceipts { get; set; }
+        public DbSet<Construction_CommitteeMember> CommitteeMembers { get; set; }
+        public DbSet<Construction_InitialReceiptDB> Takeover { get; set; }
         public DbSet<Construction_Timedemands> Timedemands { get; set; }    
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
