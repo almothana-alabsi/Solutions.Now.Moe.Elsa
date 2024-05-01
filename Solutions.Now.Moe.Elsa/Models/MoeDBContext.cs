@@ -23,11 +23,7 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<ProjectsTender> ProjectsTender {get; set;}
         public DbSet<projectStoppedTable> ProjectStoppedTable { get; set; }
         public DbSet<ResumeProjectWork> ResumeProjectWork { get; set; }
-        public DbSet<FinancialRequest> FinancialRequest { get; set; }
-   
-        /// <summary>
-        ///  open the ConstructionDBContext
-        /// </summary>
+        public DbSet<FinancialRequest> FinancialRequest { get; set; } 
         public DbSet<Invoice> Invoice { get; set; }
         public DbSet<ChangeOrder> ChangeOrder { get; set; }
 
