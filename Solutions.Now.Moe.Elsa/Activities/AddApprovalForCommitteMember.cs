@@ -57,6 +57,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
         public string? createdBy { get; set; }
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
+            string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+
             try
             {
                 IList<string> _userNameList = new List<string>();
@@ -100,7 +102,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     };
                     //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                     // await _cmis2DbContext.SaveChangesAsync();
-                    var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowStg24@;Database=Moe;TrustServerCertificate=True;";
+                    // var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowStg24@;Database=Moe;TrustServerCertificate=True;";
                     SqlConnection connection = new SqlConnection(@connectionString);
                     if (refSerial != null)
                     {

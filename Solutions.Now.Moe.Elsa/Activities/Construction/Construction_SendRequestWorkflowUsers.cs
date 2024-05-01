@@ -33,11 +33,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
-        public ConstructionSendRequestWorkflowUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        private readonly DesignReviewDBContext _designReviewDBContext;
+        public ConstructionSendRequestWorkflowUsers(ConstructionDBContext _ConstructionDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext, DesignReviewDBContext _designReviewDBContext)
         { 
-            _ConstructionDBContext = DesignReviewDBContext;
+            this._ConstructionDBContext = _ConstructionDBContext;
             _ssoDBContext = ssoDBContext;
             _moeDBContext = moeDBContext;
+            this._designReviewDBContext = _designReviewDBContext;
         }
 
         [ActivityInput(Hint = "Enter an expression that evaluates to the WorkFlow Signal.", DefaultSyntax = SyntaxNames.Literal, SupportedSyntaxes = new[] { SyntaxNames.JavaScript, SyntaxNames.Liquid })]
