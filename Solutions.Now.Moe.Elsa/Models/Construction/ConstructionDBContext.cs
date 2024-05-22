@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using Solutions.Now.Moe.Elsa.Activities;
+using Solutions.Now.Moe.Elsa.Activities.Construction;
 using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
 
 namespace Solutions.Now.Moe.Elsa.Models.Construction

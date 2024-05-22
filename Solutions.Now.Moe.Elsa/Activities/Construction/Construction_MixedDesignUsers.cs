@@ -72,8 +72,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
                 userNameDB[2] = committeeCaptain.userName;
 
-                ////مدير الشؤون الفنية والادارية 
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.DirectorateofTechnicalandAdministrativeAffairs && u.position == Positions.DirectorateHead);
+   
+                //مدير الشؤون المالية والادارية 
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs  && u.position == Positions.DirectorateHead);
+             ////مدير الشؤون الفنية والادارية 
+                //users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.DirectorateofTechnicalandAdministrativeAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
                     userNameDB[3] = users.username;
