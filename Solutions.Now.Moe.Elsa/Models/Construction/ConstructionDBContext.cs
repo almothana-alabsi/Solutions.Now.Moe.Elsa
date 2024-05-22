@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Solutions.Now.Moe.Elsa.Activities;
-using Solutions.Now.Moe.Elsa.Activities.Construction;
+
 using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
 
 namespace Solutions.Now.Moe.Elsa.Models.Construction
@@ -40,14 +39,13 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
         public DbSet<Construction_Non_complianceWithActionsCorrectiveActionsDB> MatchingCorrectiveAction { get; set; }
         public DbSet<Construction_finalDeliveryDB> FinalReceiptWork { get; set; }
         public DbSet<Construction_detailsOfFinalReceiptCommittee> detailsOfFinalReceiptCommittee { get; set; }
-
+        public DbSet<Construction_detailsOfTakeOverCommitteeofshortcomming> detailsOfTakeOverCommitteeofshortcomming { get; set; }  
         public DbSet<Construction_SubmissionApprovalQualityControlProjectSamples> SubmissionApprovalQualityControlProjectSamples { get; set; }
         public DbSet<InvoicesPayment> InvoicesPayment { get; set; }
         public DbSet<Construction_MonthlyReport> WorkScheduleMonthlyReport { get; set; }
         public DbSet<Construction_releasereservations> Releasereservations { get; set; }
         public DbSet<Construction_WorkScheduleDB> WorkSchedule { get; set; }
         public DbSet<Construction_WorkScheduleModifyDB> WorkScheduleModify { get; set; }
-
         public DbSet<Construction_Timedemands> Timedemands { get; set; }    
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

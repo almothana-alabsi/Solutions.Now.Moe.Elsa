@@ -64,11 +64,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == initialreceipt.tenderSerial);
                 //المقاول
                 userNameDB[0] = RequestSender;
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                if (users != null)
-                {
-                    userNameDB[17] = userNameDB[18] = users.username;
-                }
+               
                 //رئيس اللجنة
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
                 if (committeeCaptain != null)
@@ -135,6 +131,12 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 if (CaptinCommittee != null)
                 {
                     userNameDB[11]  = userNameDB[16] = CaptinCommittee.userName;
+                }
+
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                if (users != null)
+                {
+                    userNameDB[17] = userNameDB[18] = users.username;
                 }
             }
             catch (Exception ex)
