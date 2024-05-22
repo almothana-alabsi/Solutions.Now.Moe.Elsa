@@ -61,9 +61,15 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 var officialBooks = await _ConstructionDBContext.officialBooks.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == officialBooks.tenderSerial);
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == officialBooks.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
+                var committeeCaptainCommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == officialBooks.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
 
                 //مهندس اتصال
-                userNameDB[0] = RequestSender;
+                if (RequestSender != null) {           
+                    
+                    userNameDB[0] = RequestSender;
+ }else
+                    userNameDB[0] = committeeCaptainCommunicationEng.userName;
+               
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[1] = users.username;

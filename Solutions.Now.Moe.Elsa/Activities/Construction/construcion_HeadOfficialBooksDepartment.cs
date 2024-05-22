@@ -63,7 +63,6 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
 
-
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[1] = users.username;
@@ -76,7 +75,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 //الامين العام للشؤون الادارية والمالية 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SecretaryGeneralMoe && u.organization == 2);
                 userNameDB[4] = users.username;
-
+                //الوزير
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Ministersoffice && u.organization == 2);
+                userNameDB[5] = users.username;
             }
             catch (Exception ex)
             {

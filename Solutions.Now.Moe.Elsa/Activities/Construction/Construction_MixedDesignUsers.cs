@@ -114,7 +114,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                 //مدير ادارة الابنية والمشاريع الدولية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
-                userNameDB[5] = users.username;
+                userNameDB[10] = userNameDB[5] = users.username;
 
 
 
