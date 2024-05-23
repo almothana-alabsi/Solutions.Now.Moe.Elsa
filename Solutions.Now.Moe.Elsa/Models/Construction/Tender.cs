@@ -12,5 +12,6 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
 
         public decimal? tenderAmountUponAssignment { get; set; }
         public int? internalExternal { get; set; }
+        public int? designer { get; set; }
     }
 }
