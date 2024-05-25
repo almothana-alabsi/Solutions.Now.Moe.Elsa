@@ -81,6 +81,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[11] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[14] = users.username;
+
             }
             catch (Exception ex)
             {
