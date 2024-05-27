@@ -80,6 +80,10 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 {
                     userNameDB[6] = committeeMemberQuantitySurveyor.userName;
                 }
+                else 
+                {
+                    userNameDB[14] = committeeMemberCivilEngineer.userName;
+                }
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[2] = userNameDB[11] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
