@@ -47,7 +47,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             try
             {
 
-                List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == 4765).OrderBy(s => s.step).ToList<WorkFlowRules>();
+                List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.DesignReview_WorkflowProjectDesign).OrderBy(s => s.step).ToList<WorkFlowRules>();
 
                 var projects = await _moeDBContext.ProjectsTender.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
                 var committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.ProjectSerial == RequestSerial);
@@ -59,7 +59,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 }
                 TblUsers users = null;
                 var committeeMemberArchitectural = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.Architect);
-                userNameDB[1] = userNameDB[10] = userNameDB[12] = committeeMemberArchitectural.userName;
+                userNameDB[1] = userNameDB[10] = userNameDB[12] = userNameDB[13] = committeeMemberArchitectural.userName;
                 var committeeMemberCivilEngineer = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.CivilEngineer);
                 userNameDB[7] = committeeMemberCivilEngineer.userName;
                 var committeeMemberElectricalEngineer = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.ElectricalEngineer);
@@ -79,6 +79,10 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 if (committeeMemberQuantitySurveyor != null)
                 {
                     userNameDB[6] = committeeMemberQuantitySurveyor.userName;
+                }
+                else 
+                {
+                    userNameDB[14] = committeeMemberCivilEngineer.userName;
                 }
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[2] = userNameDB[11] = users.username;
