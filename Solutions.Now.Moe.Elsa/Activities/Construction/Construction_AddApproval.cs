@@ -10,6 +10,12 @@ using System.Threading.Tasks;
 using Elsa.Services.Models;
 using Microsoft.Extensions.Configuration;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using System.Net.Http;
+using System.Net;
+using Amazon.CloudTrail.Model;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Solutions.Now.Moe.Elsa.Integrations;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -23,10 +29,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
     {
         private readonly ConstructionDBContext _moeDBContext;
         private readonly IConfiguration _configuration;
-        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext)
+        private readonly SsoDBContext _ssoDBContext;
+        private Email _email;
+        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext, SsoDBContext ssoDBContext)
         {
             _moeDBContext = MoeDBContext;
             _configuration = configuration;
+            _ssoDBContext = ssoDBContext;
         }
 
 
@@ -100,8 +109,71 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     {
                         connection.Close();
                    }
-                
 
+                var user = await _ssoDBContext.TblUsers.OrderBy(x => x.serial).FirstOrDefaultAsync(y => y.username.Equals(approvalHistory.actionBy));
+                if (Int32.Parse(_configuration["SMS:flag"]) == 1)
+                {
+                    if (user != null)
+                    {
+                        if (user.phoneNumber != null)
+                        {
+                            if (user.phoneNumber.Length == 12 && user.phoneNumber.StartsWith("962"))
+                            {
+                                string apiUrlSMS = _configuration["SMS:URL"];
+                                string url = apiUrlSMS + user.phoneNumber.ToString() + "&createdBy=" + approvalHistory.actionBy.ToString() + "&requsetType=4666&requestSerial=" + approvalHistory.requestSerial.ToString() + "&lang=ar&isFYI=0";
+                                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                                HttpClientHandler handler = new HttpClientHandler
+                                {
+                                    ServerCertificateCustomValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; },
+                                };
+
+                                using (var httpClient = new HttpClient(handler))
+                                {
+                                    HttpResponseMessage response = await httpClient.GetAsync(url);
+                                    if (response.IsSuccessStatusCode)
+                                    {
+
+                                        Console.WriteLine("Successfully send");
+
+                                    }
+                                    else
+                                    {
+
+                                        Console.WriteLine("failer send");
+
+                                    }
+                                }
+                            }
+                        }
+                        if (Int32.Parse(_configuration["EmailApi:flag"]) == 1)
+                        {
+                            if (user.email != null)
+                            {
+                                if (_email.IsValidEmail(user.email))
+                                {
+                                    HttpClientHandler handler = new HttpClientHandler
+                                    {
+                                        Proxy = new WebProxy(_configuration["EmailApi:Proxy"])
+                                    };
+
+                                    using (var httpClient = new HttpClient(handler))
+                                    {
+                                        string url = await _email.SendEmail(approvalHistory.actionBy, 4666, approvalHistory.requestSerial, "ar", 0);
+                                        HttpResponseMessage response = await httpClient.GetAsync(url);
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            Console.WriteLine("Successfully send");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("failer send");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
             catch (Exception ex)
