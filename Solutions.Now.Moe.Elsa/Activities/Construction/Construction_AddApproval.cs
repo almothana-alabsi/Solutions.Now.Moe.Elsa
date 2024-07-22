@@ -109,7 +109,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     {
                         connection.Close();
                    }
-
+                /*
                 var user = await _ssoDBContext.TblUsers.OrderBy(x => x.serial).FirstOrDefaultAsync(y => y.username.Equals(approvalHistory.actionBy));
                 if (Int32.Parse(_configuration["SMS:flag"]) == 1)
                 {
@@ -173,7 +173,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                             }
                         }
                     }
-                }
+                }*/
 
             }
             catch (Exception ex)
