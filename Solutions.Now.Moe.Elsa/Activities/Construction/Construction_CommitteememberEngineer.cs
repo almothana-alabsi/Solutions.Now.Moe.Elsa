@@ -97,9 +97,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 else if (section == null && tenderSerial != null)
                 {
-                    var sCommittee = await _ConstructionDBContext.SupervisionCommittee.FirstOrDefaultAsync(c => c.serial == tenderSerial);
+                  //  var sCommittee = await _ConstructionDBContext.SupervisionCommittee.FirstOrDefaultAsync(c => c.serial == tenderSerial);
 
-                    var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.tenderSerial == sCommittee.tenderSerial && c.type == workflowType).ToListAsync();
+                    var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.tenderSerial == tenderSerial && c.type == workflowType).ToListAsync();
                     for (int i = 0; i < committeeMembers.Count; i++)
                     {
                         if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
