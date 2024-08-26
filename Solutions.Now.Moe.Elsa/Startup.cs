@@ -23,7 +23,7 @@ namespace Solutions.Now.Moe.Elsa
 {
     public class Startup
     {
-        //test Push fgfgfg
+        //test Push
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
