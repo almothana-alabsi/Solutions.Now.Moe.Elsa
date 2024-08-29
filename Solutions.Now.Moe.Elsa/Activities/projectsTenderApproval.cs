@@ -91,7 +91,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             {
                 ex.Message.ToString();
             }
-            DataForRequestProject infoX = new DataForRequestProject
+                DataForRequestProject infoX = new DataForRequestProject
             {
                 requestSerial = RequestSerial,
                 steps = steps,
