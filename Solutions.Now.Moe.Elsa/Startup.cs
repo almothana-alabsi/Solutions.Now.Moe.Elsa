@@ -160,6 +160,8 @@ namespace Solutions.Now.Moe.Elsa
 
                         .AddActivity<Construction_TakOverComitteeFYI>()
                      .AddActivity<Construction_CommitteeSupervisorNotficatin>()
+                      .AddActivity<ConstructionCommitteeMemberUsersPartial>()   
+                        
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()
