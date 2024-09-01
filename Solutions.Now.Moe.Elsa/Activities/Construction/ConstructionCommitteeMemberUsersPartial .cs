@@ -17,17 +17,17 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
     [Activity(
        Category = "Construction",
-       DisplayName = "Communication CommitteememberEngineer Approval",
-       Description = "Communication CommitteememberEngineer Approval in WorkflowRules Table",
+       DisplayName = "partial Committee Member Approval",
+       Description = "partial Committee Member Approval in WorkflowRules Table",
        Outcomes = new[] { OutcomeNames.Done }
    )]
-    public class Construction_CommitteememberEngineer : Activity
+    public class ConstructionCommitteeMemberUsersPartial : Activity
     {
         private readonly ConstructionDBContext _ConstructionDBContext;
         private readonly SsoDBContext _ssoDBContext;
         private readonly MoeDBContext _moeDBContext;
 
-        public Construction_CommitteememberEngineer(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
+        public ConstructionCommitteeMemberUsersPartial(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext)
         {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
@@ -47,19 +47,18 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
             List<string> committeemember = new List<string>();
-            HashSet<string> userNameDB = new HashSet<string>();
+            HashSet<string> userNameDB = new HashSet<string>();      
             try
             {
                 if (section == null && tenderSerial == null)
                 {
-                    if (workflowType == WorkFlowsName.Construction_ChangeOrder)
+                    if (workflowType == WorkFlowsName.Construction_partial_Receipt_Works)
                     {
-                        var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.type == workflowType && c.masterSerial ==null ).ToListAsync();
+                        var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType && c.captain == 1).ToListAsync();
                         for (int i = 0; i < committeeMembers.Count; i++)
                         {
                             if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
                             {
-                                //TblUsers users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username == committeeMember[i].userName);
                                 committeemember.Add(committeeMembers[i].userName);
 
                             }
@@ -68,7 +67,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     }
                     else
                     {
-                        var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c =>c.type == workflowType).ToListAsync();
+                         var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType && c.captain == 1).ToListAsync();
                         for (int i = 0; i < committeeMembers.Count; i++)
                         {
                             if (!String.IsNullOrEmpty(committeeMembers[i].userName.ToString()))
@@ -83,7 +82,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 else if (section != null && tenderSerial == null)
                 {
-                    var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c =>  c.type == workflowType && c.section == section).ToListAsync();
+                    var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.masterSerial == RequestSerial && c.type == workflowType && c.section == section).ToListAsync();
 
                     for (int i = 0; i < committeeMembers.Count; i++)
                     {
@@ -97,7 +96,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 else if (section == null && tenderSerial != null)
                 {
-                  //  var sCommittee = await _ConstructionDBContext.SupervisionCommittee.FirstOrDefaultAsync(c => c.serial == tenderSerial);
+                    //         var sCommittee = await _ConstructionDBContext.SupervisionCommittee.FirstOrDefaultAsync(c => c.serial == tenderSerial);
 
                     var committeeMembers = await _ConstructionDBContext.CommitteeMember.AsAsyncEnumerable().Where(c => c.tenderSerial == tenderSerial && c.type == workflowType).ToListAsync();
                     for (int i = 0; i < committeeMembers.Count; i++)

@@ -17,12 +17,13 @@ using Solutions.Now.Moe.Elsa.Models.Construction;
 using Automatonymous;
 using Quartz;
 using Solutions.Now.CMIS2.Elsa.Activities;
+using Solutions.Now.DesignReviewAndPlanning.Elsa.Activities;
 
 namespace Solutions.Now.Moe.Elsa
 {
     public class Startup
     {
-        //test Push fgfgfg
+        //test Push
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -155,10 +156,12 @@ namespace Solutions.Now.Moe.Elsa
                     .AddActivity<ComitteeMemberNotfications>() 
                     .AddActivity<SendRequestWorkflowUsers>()
                       .AddActivity<Construction__RaiseSurveyorsusersinRelevantcommunicationengineer>()
-
+                      .AddActivity<Construction_GetTenderSerial>()
 
                         .AddActivity<Construction_TakOverComitteeFYI>()
                      .AddActivity<Construction_CommitteeSupervisorNotficatin>()
+                      .AddActivity<ConstructionCommitteeMemberUsersPartial>()   
+                        
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddQuartzTemporalActivities()

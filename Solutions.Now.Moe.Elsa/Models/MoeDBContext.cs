@@ -28,6 +28,7 @@ namespace Solutions.Now.Moe.Elsa.Models
         public DbSet<Construction_InitialReceiptDB> Ta { get; set; }
         public DbSet<Invoice> Invoice { get; set; }
         public DbSet<ChangeOrder> ChangeOrder { get; set; }
+        public DbSet<Construction_partialTakeOver> PartialTakeOvers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

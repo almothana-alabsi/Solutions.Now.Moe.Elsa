@@ -10,6 +10,12 @@ using System.Threading.Tasks;
 using Elsa.Services.Models;
 using Microsoft.Extensions.Configuration;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using System.Net.Http;
+using System.Net;
+using Amazon.CloudTrail.Model;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Solutions.Now.Moe.Elsa.Integrations;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -23,10 +29,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
     {
         private readonly ConstructionDBContext _moeDBContext;
         private readonly IConfiguration _configuration;
-        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext)
+        private readonly SsoDBContext _ssoDBContext;
+        private Email _email;
+        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext, SsoDBContext ssoDBContext)
         {
             _moeDBContext = MoeDBContext;
             _configuration = configuration;
+            _ssoDBContext = ssoDBContext;
         }
 
 
@@ -100,8 +109,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     {
                         connection.Close();
                    }
-                
-
+              
 
             }
             catch (Exception ex)

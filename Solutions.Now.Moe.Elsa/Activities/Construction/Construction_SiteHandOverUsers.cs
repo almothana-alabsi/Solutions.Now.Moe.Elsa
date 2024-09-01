@@ -66,13 +66,22 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 userNameDB[0] = userNameDB[4] = RequestSender;
                 //المقاول
                  users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                userNameDB[1] = users.username;
+                if (users != null)
+                {
+                    userNameDB[1] = users.username;
+                }
                 //رئيس قسم الدراسات والتصميم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead && u.organization == Organization.MOE);
-                userNameDB[2] = users.username;
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == Organization.MOE);
-                userNameDB[3] = users.username;
+                if (users != null)
+                {
+                    userNameDB[3] = users.username;
+                }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
                 if (users != null)
@@ -87,7 +96,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //مدير ادارة الشؤون المالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
-                userNameDB[7] = users.username;
+                if (users != null)
+                {
+                    userNameDB[7] = users.username;
+                }
                 //الاستشاري
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == tender.designer && u.position == Positions.Consultant);
                 if (users != null)

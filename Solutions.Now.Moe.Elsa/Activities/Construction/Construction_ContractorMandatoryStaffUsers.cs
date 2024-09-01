@@ -84,7 +84,24 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 {
                     userNameDB[4] = users.username;
                 }
-
+               //مدير ادارة الابنية والمشاريع الدولية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[5] = users.username;
+                }
+                //مدير مديرية الشؤون الهندسية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[6] = users.username;
+                }
+                //رئيس قسم متابعة تنفيذ المشاريع المحلية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[7] = users.username;
+                } 
 
             }
             catch (Exception ex)
