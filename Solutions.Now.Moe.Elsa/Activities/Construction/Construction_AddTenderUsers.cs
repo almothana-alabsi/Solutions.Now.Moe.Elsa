@@ -87,13 +87,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[9] = users.username;
                 // رئيس قسم الرقابة الداخلية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor &&u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u =>/* u.Administration == tender.tenderSupervisor &&*/u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
                if (users != null)
                 {
                     userNameDB[10] = users.username;
                 }
                // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => /*u.Administration == tender.tenderSupervisor &&*/ u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[11] = users.username;
