@@ -55,7 +55,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                var WorkScheduleModify = await _ConstructionDBContext.WorkScheduleModify.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial);
+                var WorkScheduleModify = await _ConstructionDBContext.WorkSchedule.FirstOrDefaultAsync(x => x.projectSerial == RequestSerial && x.modified == true);
 
                 var tender = _ConstructionDBContext.Tender.FirstOrDefault(x => x.tenderSerial == WorkScheduleModify.tenderSerial);
                 // المقاول
