@@ -88,7 +88,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 };
                 //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                 // await _cmis2DbContext.SaveChangesAsync();
-               // var @connectionString = "Server=185.193.17.20;Uid=Sa;Pwd=SolNowStg24@;Database=Moe";
+               // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev24@;Database=Moe";
                 SqlConnection connection = new SqlConnection(connectionString);
 
    

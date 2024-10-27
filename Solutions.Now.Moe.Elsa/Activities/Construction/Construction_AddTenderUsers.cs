@@ -59,7 +59,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x =>x.tenderSerial == RequestSerial);
                 //رئيس قسم العطاءات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.sectionOfTender && u.position == Positions.sectionHead && u.organization == 2);
-                userNameDB[0] = users.username;
+                userNameDB[0] = userNameDB[14]= users.username;
                 //مهندس قسم العطاءات
                 userNameDB[1] = tender.tendersDepartmentEngineer;
                 //مدير ادارو الابنية والمشاريع الدولية
