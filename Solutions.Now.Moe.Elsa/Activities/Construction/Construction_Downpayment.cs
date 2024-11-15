@@ -109,8 +109,19 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[10] = users.username;
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
-                userNameDB[11] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == 2 || u.organization == 3));
+                if (users != null)
+                {
+                    userNameDB[11] = users.username;
+                }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
+                    if (users != null)
+                    {
+                        userNameDB[11] = users.username;
+                    }
+                }
                 //رئيس قسم النفقات والمخصصات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[12] = users.username;

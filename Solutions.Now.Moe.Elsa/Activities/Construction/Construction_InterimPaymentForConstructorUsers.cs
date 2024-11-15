@@ -121,10 +121,18 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[10] = users.username;
                 }
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == 2 || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[11] = users.username;
+                }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
+                    if (users != null)
+                    {
+                        userNameDB[11] = users.username;
+                    }
                 }
                 //مدير مديرية الحسابات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.AccountsDirectorate && u.position == Positions.DirectorateHead && u.organization == 2);
