@@ -74,7 +74,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     userNameDB[2] = users.username;
                 }
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == 2 || u.organization == 3));
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.DirectorateHead && (u.organization == 2 || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[3] = users.username;

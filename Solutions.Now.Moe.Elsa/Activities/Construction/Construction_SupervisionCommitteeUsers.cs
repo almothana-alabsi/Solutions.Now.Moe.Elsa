@@ -66,7 +66,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[0] = users.username;
                 }              
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == 2 || u.organization == 3));
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.DirectorateHead && (u.organization == 2 || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[1] = users.username;
@@ -80,7 +80,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     }
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.DirectorateHead);
                 if (users != null)
                 {
                     userNameDB[2] = users.username;
