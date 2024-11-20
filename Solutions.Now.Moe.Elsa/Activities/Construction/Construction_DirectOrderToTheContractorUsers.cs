@@ -69,10 +69,22 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 {
                     userNameDB[1] = users.username;
                     if (RequestSender.ToLower() == userNameDB[1].ToLower()) { IsSecyionHeadFlag = 1; }
-                }     
+                }
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
-                userNameDB[2] = users.username;
+                //                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.DirectorateHead && (u.organization == 2 || u.organization == 3));
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
+                    if (users != null)
+                    {
+                        userNameDB[2] = users.username;
+                    }
+                }
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);
                 if (users != null)
@@ -80,7 +92,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[3] = users.username;
                 }      
                 // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[4] = users.username;

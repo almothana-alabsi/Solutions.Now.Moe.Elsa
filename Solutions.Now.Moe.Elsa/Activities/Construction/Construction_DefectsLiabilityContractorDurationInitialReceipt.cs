@@ -80,7 +80,7 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
                     userNameDB[12] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == Organization.MOE || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[13] = users.username;

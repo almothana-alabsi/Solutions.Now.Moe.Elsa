@@ -141,7 +141,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
 
                 // رئيس قسم المالية في مديرية التربية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
                     userNameDB[14] = users.username;
