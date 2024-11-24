@@ -39,7 +39,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         private readonly IConfiguration _configuration;
 
         public ConstructionSendRequestWorkflowUsers(ConstructionDBContext DesignReviewDBContext, SsoDBContext ssoDBContext, MoeDBContext moeDBContext, IConfiguration configuration)
-        { 
+        {
             _ConstructionDBContext = DesignReviewDBContext;
             _ssoDBContext = ssoDBContext;
             _moeDBContext = moeDBContext;
@@ -60,7 +60,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             try
             {
 
-          
+
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
                 HttpClientHandler handler = new HttpClientHandler
                 {
@@ -69,8 +69,16 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                 using (var httpClient = new HttpClient(handler))
                 {
-                    string URL = connectionString + "/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial.ToString();
+                    string URL = String.Empty;
 
+                    if (connectionString.EndsWith("/"))
+                    {
+                        URL = connectionString + "api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial.ToString();
+                    }
+                    else
+                    {
+                        URL = connectionString + "/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial.ToString();
+                    }
 
                     HttpResponseMessage response = await httpClient.GetAsync(URL);
                     if (response.IsSuccessStatusCode)
