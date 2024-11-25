@@ -98,7 +98,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[9] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead);
                 userNameDB[10] = users.username;
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG && u.organization == Positions.OrganizationMOE);
                 userNameDB[11] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Minister);
                 userNameDB[12] = users.username;

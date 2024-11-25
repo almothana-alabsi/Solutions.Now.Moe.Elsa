@@ -22,6 +22,8 @@
         public const int SecretaryGeneralMoe = 3626;
         public const int Ministersoffice = 3583;
         public const int siteEng = 3592;
+        public const int OrganizationMOE = 2;
+
     }
 
 }
