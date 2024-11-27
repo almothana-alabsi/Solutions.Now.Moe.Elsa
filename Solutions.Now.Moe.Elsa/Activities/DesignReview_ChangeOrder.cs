@@ -60,7 +60,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 ChangeOrder changeOrder = await _moeDBContext.ChangeOrder.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
                 ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(s => s.Serial.ToString().Equals(changeOrder.tenderSerial.ToString()));
                 var committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.TenderSerial == referedTender.Serial);
-                CommitteeMember committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i => i.committeeSerial == committee.Serial && i.capten == 1);
+                CommitteeMember committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i => i.committeeSerial == committee.Serial && i.major == major);
                 for (int i = 0; i < workFlowRules.Count; i++)
                 {
 
@@ -72,7 +72,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
                 userNameDB[0] = users.username;
                 //المعماري
-                committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i => i.committeeSerial == committee.Serial && i.capten == 1);
+                committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i => i.committeeSerial == committee.Serial && i.major == major);
 
                 userNameDB[1] = userNameDB[7] = committeeMember.userName;
 
@@ -98,7 +98,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[9] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead);
                 userNameDB[10] = users.username;
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG && u.organization == Organization.MOE);
                 userNameDB[11] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Minister);
                 userNameDB[12] = users.username;
