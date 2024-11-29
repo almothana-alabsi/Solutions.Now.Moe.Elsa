@@ -6,11 +6,13 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
     {
         [Key]
         public int? tenderSerial { get; set; }
+        public string? fullTender { get; set; }
         public int? tenderContracter1 { get; set; }
         public int? tenderSupervisor { get; set; }
         public string? tendersDepartmentEngineer { get; set; }
 
         public decimal? tenderAmountUponAssignment { get; set; }
         public int? internalExternal { get; set; }
+        public int? designer { get; set; }
     }
 }

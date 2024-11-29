@@ -12,6 +12,7 @@ using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -64,16 +65,25 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == siteHandOver.tenderSerial);
                 userNameDB[0] = userNameDB[4] = RequestSender;
                 //المقاول
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                userNameDB[1] = users.username;
+                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
+                if (users != null)
+                {
+                    userNameDB[1] = users.username;
+                }
                 //رئيس قسم الدراسات والتصميم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead && u.organization == Organization.MOE);
-                userNameDB[2] = users.username;
+                if (users != null)
+                {
+                    userNameDB[2] = users.username;
+                }
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == Organization.MOE);
-                userNameDB[3] = users.username;
+                if (users != null)
+                {
+                    userNameDB[3] = users.username;
+                }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == Organization.MOE || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[5] = users.username;
@@ -85,10 +95,21 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     userNameDB[6] = users.username;
                 }
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
-                userNameDB[7] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.DirectorateHead && (u.organization == 2 || u.organization == 3));
+                if (users != null)
+                {
+                    userNameDB[7] = users.username;
+                }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
+                    if (users != null)
+                    {
+                        userNameDB[7] = users.username;
+                    }
+                }
                 //الاستشاري
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == tender.internalExternal && u.position == Positions.Consultant);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == tender.designer && u.position == Positions.Consultant);
                 if (users != null)
                 {
                     userNameDB[8] = users.username;

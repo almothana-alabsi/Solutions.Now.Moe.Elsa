@@ -10,6 +10,12 @@ using System.Threading.Tasks;
 using Elsa.Services.Models;
 using Microsoft.Extensions.Configuration;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using System.Net.Http;
+using System.Net;
+using Amazon.CloudTrail.Model;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Solutions.Now.Moe.Elsa.Integrations;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -23,10 +29,13 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
     {
         private readonly ConstructionDBContext _moeDBContext;
         private readonly IConfiguration _configuration;
-        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext)
+        private readonly SsoDBContext _ssoDBContext;
+        private Email _email;
+        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext, SsoDBContext ssoDBContext)
         {
             _moeDBContext = MoeDBContext;
             _configuration = configuration;
+            _ssoDBContext = ssoDBContext;
         }
 
 
@@ -60,7 +69,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
 
             try
-            {
+                {
                 if (Status == null) { Status = 387; };
                 ApprovalHistory approvalHistory = new ApprovalHistory
                 {
@@ -79,11 +88,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 };
                 //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                 // await _cmis2DbContext.SaveChangesAsync();
-               // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+               // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev24@;Database=Moe";
                 SqlConnection connection = new SqlConnection(connectionString);
 
    
-                    string query = "INSERT INTO [Moe].[Construction].[ApprovalHistory] ([requestserial] ,[requestType] ,[createdDate],[actionBy],[expireDate],[status],[URL],[Form],[step],[ActionDetails],createdBy) ";
+                     string query = "INSERT INTO [Moe].[Construction].[ApprovalHistory] ([requestserial] ,[requestType] ,[createdDate],[actionBy],[expireDate],[status],[URL],[Form],[step],[ActionDetails],createdBy) ";
                     query = query + " values (" + approvalHistory.requestSerial + ", " + approvalHistory.requestType + ",  GETDATE(), '" + approvalHistory.actionBy + "', GETDATE()+10 , " + approvalHistory.status + ", '" + approvalHistory.URL + "', '" + approvalHistory.Form + "', " + approvalHistory.step + "," + approvalHistory.ActionDetails + ",'" + approvalHistory.createdBy + "');";
                     SqlCommand command = new SqlCommand(query, connection);
                     try
@@ -100,8 +109,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                     {
                         connection.Close();
                    }
-                
-
+              
 
             }
             catch (Exception ex)

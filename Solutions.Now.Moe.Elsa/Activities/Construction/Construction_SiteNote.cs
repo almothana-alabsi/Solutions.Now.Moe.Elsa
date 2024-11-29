@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -56,13 +57,25 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
             try
             {
-                var approvalOfDesignMixtures = await _ConstructionDBContext.ApprovalOfDesignMixtures.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                //ProceduresForSubmittingSiteMemorandum
+                var approvalOfDesignMixtures = await _ConstructionDBContext.ProceduresForSubmittingSiteMemorandum.FirstOrDefaultAsync(x => x.serial == RequestSerial);
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == approvalOfDesignMixtures.tenderSerial);
 
 
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[1] = committeeCaptain.userName;
+                if (RequestSender != committeeCaptain.userName)
+                {
+                 
+                    userNameDB[0] = RequestSender;
+                    userNameDB[1] = committeeCaptain.userName;
+
+                }
+                else {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
+                    userNameDB[0] = RequestSender;
+                    userNameDB[1] = users.username;
+                }
 
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
@@ -70,8 +83,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
 
                 // مهندس موقع
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng);
-                userNameDB[0] = users.username;
+              /*  users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.siteEng && u.contractor == tender.tenderContracter1);
+                userNameDB[0] = users.username;*/
 
             }
             catch (Exception ex)

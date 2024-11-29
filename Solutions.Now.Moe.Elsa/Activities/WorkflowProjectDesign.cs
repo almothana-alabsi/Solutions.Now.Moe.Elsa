@@ -13,6 +13,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Common;
 using Amazon.IdentityManagement.Model;
 using MassTransit.RabbitMqTransport;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -46,7 +47,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
             try
             {
 
-                List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == 4765).OrderBy(s => s.step).ToList<WorkFlowRules>();
+                List<WorkFlowRules> workFlowRules = _moeDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.DesignReview_WorkflowProjectDesign).OrderBy(s => s.step).ToList<WorkFlowRules>();
 
                 var projects = await _moeDBContext.ProjectsTender.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
                 var committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.ProjectSerial == RequestSerial);
@@ -58,7 +59,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 }
                 TblUsers users = null;
                 var committeeMemberArchitectural = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.Architect);
-                userNameDB[1] = userNameDB[10] = userNameDB[12] = committeeMemberArchitectural.userName;
+                userNameDB[1] = userNameDB[10] = userNameDB[12] = userNameDB[13] = committeeMemberArchitectural.userName;
                 var committeeMemberCivilEngineer = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.CivilEngineer);
                 userNameDB[7] = committeeMemberCivilEngineer.userName;
                 var committeeMemberElectricalEngineer = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.ElectricalEngineer);
@@ -79,12 +80,20 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 {
                     userNameDB[6] = committeeMemberQuantitySurveyor.userName;
                 }
+                else 
+                {
+                    userNameDB[14] = committeeMemberCivilEngineer.userName;
+                }
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
                 userNameDB[2] = userNameDB[11] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
                 userNameDB[8] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead);
                 userNameDB[9] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == 4733 && u.position == 3581);
+                userNameDB[15] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == 4732 && u.position == 3579);
+                userNameDB[16] = users.username;
 
             }
             catch (Exception ex)

@@ -12,6 +12,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -74,6 +75,15 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 {
                     userNameDB[2] = users.username;
                 }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                    if (users != null)
+                    {
+                        userNameDB[2] = users.username;
+                    }
+                }
+
                 // رئيس قسم الرقابة الداخلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
                 if (users != null)
@@ -99,8 +109,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = users.username;
                 //مهندس اتصال
-                var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                userNameDB[8] = committeeCaptain.userName;
+                var communicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
+                userNameDB[8] = communicationEng.userName;
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[9] = users.username;
@@ -108,8 +118,19 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[10] = users.username;
                 //مدير ادارة الشؤون المالية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
-                userNameDB[11] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.DirectorateHead && (u.organization == 2 || u.organization == 3));
+                if (users != null)
+                {
+                    userNameDB[11] = users.username;
+                }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.AdminstratorFinancial && u.position == Positions.AdministrationHead && u.organization == 2);
+                    if (users != null)
+                    {
+                        userNameDB[11] = users.username;
+                    }
+                }
                 //رئيس قسم النفقات والمخصصات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[12] = users.username;

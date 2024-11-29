@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
 using System;
+using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -56,9 +58,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
-                userNameDB[0] = users.username;
+                userNameDB[0] = userNameDB[12] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.username.Equals(referedTender.assignedEngineer));
-                userNameDB[1] = (users == null) ? "NoEngineer" : users.username;
+                userNameDB[1]  = (users == null) ? "NoEngineer" : users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
                 userNameDB[2] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.maintenanceSection && u.position == Positions.sectionHead);
@@ -77,7 +79,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[10] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead);
                 userNameDB[11] = users.username;
-              
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.section && u.position == Positions.sectionHead);
+                userNameDB[14] = users.username;
+
             }
             catch (Exception ex)
             {
@@ -97,3 +101,4 @@ namespace Solutions.Now.Moe.Elsa.Activities
         }
     }
 }
+

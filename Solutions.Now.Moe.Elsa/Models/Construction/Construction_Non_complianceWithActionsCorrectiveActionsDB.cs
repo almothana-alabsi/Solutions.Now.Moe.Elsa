@@ -11,6 +11,5 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction.DTOs
         [Key]
         public int? serial { get; set; }
         public int? tenderSerial { get; set; }
-        public int? tenderSupervisor { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -73,7 +74,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     userNameDB[2] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == Organization.MOE || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[3] = users.username;

@@ -139,7 +139,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 try
                 {
 
-                   // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                   // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev24@;Database=Moe";
                     SqlConnection connection = new SqlConnection(connectionString);
 
 

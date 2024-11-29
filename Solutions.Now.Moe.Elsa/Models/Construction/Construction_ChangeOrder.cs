@@ -6,8 +6,12 @@ namespace Solutions.Now.Moe.Elsa.Models.Construction
     {
         [Key]
         public int? serial { get; set; }
- 
-        public int? amount { get; set; }
+        public decimal? ChangeOrderAmount { get; set; }
+        public decimal? TheTotalEstimatedValueOfTheChangeOrder { get; set; }
         public int? tenderSerial { get; set; }
+        public int? projectSerial { get; set; }
+        public string? requestBy { get; set; }
+
+
     }
 }

@@ -10,6 +10,8 @@ namespace Solutions.Now.Moe.Elsa.Models
 
         }
         public DbSet<TblUsers> TblUsers { get; set; }
-
+        public DbSet<MasterData> MasterData { get; set; }
+        public DbSet<SMSAndEmail_Audit> SMSAndEmail_Audit { get; set; }
+  
     }
 }

@@ -30,6 +30,8 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_WorkSchedule = 3790;
         public const int Construction_ModifiedWorkSchedule = 3791;
         public const int Construction_Paymentforcompletion = 3803;
+        public const int Construction_FinalPayment = 3804;
+
         public const int Construction_InterimPayment = 3792;
         public const int Construction_ClosingPaymentUsers = 3804;
         public const int Construction_ContractorFinancialTemporalClaims = 3810;
@@ -41,11 +43,25 @@ namespace Solutions.Now.Moe.Elsa.Common
         public const int Construction_finalDelivery = 3801;
         public const int Construction_Non_complianceWithActionsCorrectiveActions = 3818;
         public const int Construction_OfficialCommunicationEngineerBooks = 3812;
+        public const int Construction_OfficialSiteEngOrCaptainCommittee = 5073;
         public const int Construction_SiteNote = 3822;
         public const int Construction_DailyWorkflow = 3821;
         public const int Construction_ApprovalBooksByContractor = 4916;
         public const int Construction_OfficialBooksBycontractor = 4916;
         public const int Construction_InitialReceipt = 4631;
+        public const int Construction_BidCancellation = 4729;
+        public const int Construction_BidStop = 4743;
+        public const int Construction_BidResumption = 4747;
+        public const int Construction_QualityControl = 3797;
+        public const int Construction_WorkScheduleMonthlyReportUsers = 5023;
+        public const int Construction_ChangeOrder = 3795;
+
+
+
+
+        public const int DesignReview_ChangeOrder = 5351;
+        public const int DesignReview_WorkflowProjectDesign = 4765;
+
     }       
 
 }

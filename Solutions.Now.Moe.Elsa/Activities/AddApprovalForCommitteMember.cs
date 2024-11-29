@@ -22,9 +22,10 @@ namespace Solutions.Now.Moe.Elsa.Activities
     public class AddApprovalForCommitteMember : Activity
     {
         private readonly MoeDBContext _moeDBContext;
-        public IConfiguration Configuration { get; }
-        public AddApprovalForCommitteMember(MoeDBContext MoeDBContext)
+        private readonly IConfiguration _configuration;
+        public AddApprovalForCommitteMember(MoeDBContext MoeDBContext,IConfiguration configuration)
         {
+            _configuration = configuration;
             _moeDBContext = MoeDBContext;
         }
 
@@ -56,6 +57,8 @@ namespace Solutions.Now.Moe.Elsa.Activities
         public string? createdBy { get; set; }
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
+            string connectionString = _configuration.GetConnectionString("DefaultConnectionMoe");
+
             try
             {
                 IList<string> _userNameList = new List<string>();
@@ -99,7 +102,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     };
                     //await _cmis2DbContext.ApprovalHistory.AddAsync(approvalHistory);
                     // await _cmis2DbContext.SaveChangesAsync();
-                    var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev23;Database=Moe";
+                    // var @connectionString = "Server=207.180.223.162;Uid=Sa;Pwd=SolNowDev24@;Database=Moe;TrustServerCertificate=True;";
                     SqlConnection connection = new SqlConnection(@connectionString);
                     if (refSerial != null)
                     {

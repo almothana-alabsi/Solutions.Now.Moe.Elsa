@@ -12,6 +12,7 @@ using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
 using System.Linq;
 using Solutions.Now.Moe.Elsa.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -78,12 +79,29 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     userNameDB[3] = users.username;
                 }
                 //مدير مديرية التربية والتعليم
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && u.organization == Organization.MOE);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead && (u.organization == Organization.MOE || u.organization == 3));
                 if (users != null)
                 {
                     userNameDB[4] = users.username;
                 }
-
+               //مدير ادارة الابنية والمشاريع الدولية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[5] = users.username;
+                }
+                //مدير مديرية الشؤون الهندسية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[6] = users.username;
+                }
+                //رئيس قسم متابعة تنفيذ المشاريع المحلية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
+                if (users != null)
+                {
+                    userNameDB[7] = users.username;
+                } 
 
             }
             catch (Exception ex)

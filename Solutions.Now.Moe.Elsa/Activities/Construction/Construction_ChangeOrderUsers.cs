@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Solutions.Now.Moe.Elsa.Common;
 using Elsa.Services;
 using Solutions.Now.Moe.Elsa.Models.Construction.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -41,9 +42,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             List<int?> steps = new List<int?>();
             List<string> userNameDB = new List<string>();
             List<string> Screen = new List<string>();
-            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_Paymentforcompletion).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
+            List<WorkFlowRulesConstruction> workFlowRules = _ConstructionDBContext.WorkFlowRules.AsQueryable().Where(s => s.workflow == WorkFlowsName.Construction_ChangeOrder).OrderBy(s => s.step).ToList<WorkFlowRulesConstruction>();
             TblUsers users;
-          var positionUser = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == RequestSender).position;
+            int positionUser = 0;
+
+
 
             for (int i = 0; i < workFlowRules.Count; i++)
             {
@@ -53,10 +56,11 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
             }
             try
             {
-                  // var contractorStaff = await _ConstructionDBContext.TenderAdvancePaymentRequest.FirstOrDefaultAsync(x => x.serial == RequestSerial);
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
-        
-                
+                var changeOreder = await _ConstructionDBContext.ChangeOrder.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == changeOreder.tenderSerial);
+                var user = _ssoDBContext.TblUsers.FirstOrDefault(u => u.username == changeOreder.requestBy);
+                positionUser = (int)user.position;
+
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[0] = users.username;
@@ -68,8 +72,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[1] = committeeCaptain.userName;
-               
+                if (users != null)
+                {
+                    userNameDB[1] = committeeCaptain.userName;
+                }
                 ////مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
                 if (users != null)
@@ -84,10 +90,18 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //مدير مديرية الشؤون الهندسية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead && u.organization == 2);
-                userNameDB[5] =userNameDB[8] = userNameDB[15]=users.username;
+                if (users != null)
+                {
+                    userNameDB[5] = userNameDB[8] = userNameDB[15] = users.username;
+                }
                //مهندس اتصال
                 var CommunicationEng = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x =>x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_CommunicationEng && x.captain == 1);
-                userNameDB[6] = userNameDB[19]= CommunicationEng.userName;
+                if (users != null)
+                {
+                    userNameDB[6] = userNameDB[19] = CommunicationEng.userName;
+                    //userNameDB[6] = userNameDB[19] = userNameDB[13] = CommunicationEng.userName;
+
+                }
                 //رئيس قسم متابعة تنفيذ المشاريع المحلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.Section == Hierarchy.sectionOfFollowUpToImplementationOfLocalProjectsSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[7] = userNameDB[14] =users.username;
@@ -103,7 +117,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 //الوزير
 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Ministersoffice && u.organization == 2);
-                userNameDB[10] = userNameDB[18] =users.username;
+                userNameDB[11] = userNameDB[18] =users.username;
 
 
 
@@ -119,10 +133,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 name = userNameDB,
                 Screens = Screen,
                 RequestSender = RequestSender,
-                position =  3624//positionUser
+                position = positionUser
             };
             context.Output = infoX;
             return Done();
-        }
+        }   
     }
 }

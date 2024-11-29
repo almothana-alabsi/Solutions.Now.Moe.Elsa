@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Models.Construction;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -62,7 +63,10 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 userNameDB[0] = tender.tendersDepartmentEngineer.ToString();
                 //رئيس قسم العطاءات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.sectionOfTender && u.position == Positions.sectionHead && u.organization == 2);
-                userNameDB[1] = users.username;
+                if (users != null)
+                {
+                    userNameDB[1] = users.username;
+                }
                 //مدير ادارو الابنية والمشاريع الدولية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == Hierarchy.Administration && u.position == Positions.AdministrationHead && u.organization == 2);
                 userNameDB[2] = users.username;
@@ -77,6 +81,12 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 if (users != null)
                 {
                     userNameDB[5] = users.username;
+                }
+                //مدير مديرية الشؤون الفنية والادارية
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == 4825 && u.position == Positions.DirectorateHead && u.organization==2);
+                if (users != null)
+                {
+                    userNameDB[6] = users.username;
                 }
                 //رئيس قسم الابنية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Section == Hierarchy.sectionBuilding && u.position == Positions.sectionHead);

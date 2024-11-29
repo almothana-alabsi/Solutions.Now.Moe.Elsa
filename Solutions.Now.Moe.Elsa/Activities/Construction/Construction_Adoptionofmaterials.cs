@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using Solutions.Now.Moe.Elsa.Common;
 using Elsa.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solutions.Now.Moe.Elsa.Activities.Construction
 {
@@ -53,7 +54,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
           }
           try
           {
-                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == 8);
+                var AdoptionMaterials = await _ConstructionDBContext.AdoptionMaterials.FirstOrDefaultAsync(x => x.serial == RequestSerial);
+                var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == AdoptionMaterials.tenderSerial);
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[0] = users.username;
@@ -65,7 +67,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
           }
                 //رئيس اللجنة
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[2] = committeeCaptain.userName;
+                userNameDB[2] =userNameDB[9]= committeeCaptain.userName;
                 ////مدير الشؤون الادارية والمالية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.position == Positions.DirectorateHead);
           if (users != null)
