@@ -62,7 +62,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     userNameDB[1] = users.username;
                     users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.Directorate && u.position == Positions.DirectorateHead);
                     userNameDB[2] = users.username;
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
                     userNameDB[3] = users.username;
                    
 

@@ -82,7 +82,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     {
                      
                         ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(i => i.Serial == projectStopped.serialTender);
-                        users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
+                        users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
                         userNameDB[6] = users.username;
                     }
 

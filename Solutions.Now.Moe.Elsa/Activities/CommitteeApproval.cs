@@ -68,7 +68,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[3] = users.username;
                 if (committee.TenderSerial != null)
                 {
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
                     userNameDB[2] = users.username;
 
                 }
