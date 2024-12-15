@@ -148,6 +148,15 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 {
                     userNameDB[14] = users.username;
                 }
+                else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
+                    if (users != null)
+                    {
+                        userNameDB[14] = users.username;
+                    }
+                }
+
 
                 // رئيس قسم الرقابة الداخلية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
