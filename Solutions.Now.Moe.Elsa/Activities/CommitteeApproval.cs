@@ -80,11 +80,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
 
 
-                //var committeeMemberArchitectural = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.Architect);
-                //if (committeeMemberArchitectural != null)
-                //{
-                //    userNameDB[2] = committeeMemberArchitectural.userName;
-                //}
+                
             }
             catch (Exception ex)
             {

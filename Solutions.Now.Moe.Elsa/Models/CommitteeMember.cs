@@ -14,6 +14,7 @@ namespace Solutions.Now.Moe.Elsa.Models
         public string? userName { get; set; }
         public int? capten { get; set; }
         public int? major { get; set; }
+        public DateTime? dateOfWithdrawal { get; set; }
 
 
     }

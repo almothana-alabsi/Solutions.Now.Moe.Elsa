@@ -12,6 +12,8 @@ using System.Linq;
 using System;
 using Solutions.Now.Moe.Elsa.Common;
 using Microsoft.EntityFrameworkCore;
+using DotLiquid.Util;
+using System.Reflection.Metadata;
 
 namespace Solutions.Now.Moe.Elsa.Activities
 {
@@ -47,6 +49,9 @@ namespace Solutions.Now.Moe.Elsa.Activities
             List<string> userNameDB = new List<string>();
 
             List<string> Screen = new List<string>();
+
+            int? Consultant = 0;
+
             try
             {
 
@@ -61,45 +66,45 @@ namespace Solutions.Now.Moe.Elsa.Activities
                     Screen.Add(workFlowRules[i].screen);
                 }
                 projectStoppedTable projectStopped = await _moeDBContext.ProjectStoppedTable.FirstOrDefaultAsync(i => i.serial == RequestSerial);
+                ReferedTender refered = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(x => x.Serial == projectStopped.serialTender);
+                // projectStoppedTable projectStopped = await _moeDBContext.projectStoppedTable.FirstOrDefaultAsync(i => i.serial == RequestSerial);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.sectionHead && u.Section == Hierarchy.section);
+                userNameDB[0] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.sectionHead && u.Section == Hierarchy.ExpenseSection);
+                userNameDB[1] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.DirectorateHead && u.Directorate == Hierarchy.Directorate);
+                userNameDB[2] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.DirectorateHead && u.Directorate == Hierarchy.AccountsDirectorate);
+                userNameDB[3] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.AdministrationHead && u.Administration == Hierarchy.AdminstratorFinancial);
+                userNameDB[4] = users.username;
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.AdministrationHead && u.Administration == Hierarchy.Administration);
+                userNameDB[5] = users.username;
+
+                if (refered.Consultant != null)
+                {
+
+                    Consultant = 1;
+                    ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(i => i.Serial == projectStopped.serialTender);
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
+                    userNameDB[6] = users.username;
+
+                }
 
 
-        
-                    // projectStoppedTable projectStopped = await _moeDBContext.projectStoppedTable.FirstOrDefaultAsync(i => i.serial == RequestSerial);
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.sectionHead && u.Section == Hierarchy.section);
-                    userNameDB[0] = users.username;
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.sectionHead && u.Section == Hierarchy.ExpenseSection);
-                    userNameDB[1] = users.username;
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.DirectorateHead && u.Directorate == Hierarchy.Directorate);
-                    userNameDB[2] = users.username;
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.DirectorateHead && u.Directorate == Hierarchy.AccountsDirectorate);
-                    userNameDB[3] = users.username;
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.AdministrationHead && u.Administration == Hierarchy.AdminstratorFinancial);
-                    userNameDB[4] = users.username;
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.AdministrationHead && u.Administration == Hierarchy.Administration);
-                    userNameDB[5] = users.username;
-
-                    if (projectStopped.serialTender != null)
-                    {
-                     
-                        ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(i => i.Serial == projectStopped.serialTender);
-                        users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
-                        userNameDB[6] = users.username;
-                    }
-
-                
             }
             catch (Exception ex)
             {
                 ex.Message.ToString();
             }
-            DataForRequestProject infoX = new DataForRequestProject
+            DataForRequestProjectAdditionalFields infoX = new DataForRequestProjectAdditionalFields
             {
                 requestSerial = RequestSerial,
 
                 steps = steps,
                 name = userNameDB,
                 Screens = Screen,
-
+                consultant = Consultant
             };
             context.Output = infoX;
             return Done();
