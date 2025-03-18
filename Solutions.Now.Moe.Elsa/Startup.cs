@@ -161,6 +161,7 @@ namespace Solutions.Now.Moe.Elsa
                         .AddActivity<Construction_TakOverComitteeFYI>()
                      .AddActivity<Construction_CommitteeSupervisorNotficatin>()
                       .AddActivity<ConstructionCommitteeMemberUsersPartial>()   
+                      .AddActivity<CommitteeMemberApprovalDateOfWithdrawal>()   
                         
 
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)

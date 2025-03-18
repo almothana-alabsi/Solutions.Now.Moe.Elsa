@@ -48,7 +48,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 Invoice invoice = await _moeDBContext.Invoice.FirstOrDefaultAsync(i => i.Serial == RequestSerial);
                 ReferedTender referedTender = await _moeDBContext.ReferedTender.FirstOrDefaultAsync(r => r.Serial == invoice.tenderSerial);
                 Committee committee = await _moeDBContext.Committee.FirstOrDefaultAsync(i => i.TenderSerial == referedTender.Serial);
-                CommitteeMember committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i =>  i.committeeSerial == committee.Serial && i.capten == 1 );
+                CommitteeMember committeeMember = await _moeDBContext.CommitteeMember.FirstOrDefaultAsync(i =>  i.committeeSerial == committee.Serial && i.major == Positions.Architect);
                 for (int i = 0; i < workFlowRules.Count; i++)
                 {
 

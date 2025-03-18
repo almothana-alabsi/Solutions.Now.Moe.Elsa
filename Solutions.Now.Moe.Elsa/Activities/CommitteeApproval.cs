@@ -68,7 +68,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[3] = users.username;
                 if (committee.TenderSerial != null)
                 {
-                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant);
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Consultant == referedTender.Consultant && u.position == Positions.Consultant);
                     userNameDB[2] = users.username;
 
                 }
@@ -80,11 +80,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
 
 
-                //var committeeMemberArchitectural = _moeDBContext.CommitteeMember.AsQueryable().FirstOrDefault(c => c.committeeSerial == committee.Serial && c.major == Positions.Architect);
-                //if (committeeMemberArchitectural != null)
-                //{
-                //    userNameDB[2] = committeeMemberArchitectural.userName;
-                //}
+                
             }
             catch (Exception ex)
             {
