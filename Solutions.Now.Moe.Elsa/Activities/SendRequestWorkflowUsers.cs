@@ -59,7 +59,9 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
 
                 using (var httpClient = new HttpClient())
                 {
-                    string URL = connectionString + "/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial.ToString() + "/" + userName;
+                    string URL = (connectionString.EndsWith("/"))
+                        ? connectionString + "api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial + "/" + userName
+                        : connectionString + "/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial + "/" + userName;
 
 
                     HttpResponseMessage response = await httpClient.GetAsync(URL);
