@@ -1,22 +1,23 @@
 ﻿using Amazon.AWSSupport.Model;
-using Elsa.Attributes;
 using Elsa;
-using Solutions.Now.Moe.Elsa.Models;
-using Elsa.Services;
 using Elsa.ActivityResults;
+using Elsa.Attributes;
 using Elsa.Expressions;
+using Elsa.Services;
 using Elsa.Services.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using Solutions.Now.Moe.Elsa.Models;
-using System;
-using Solutions.Now.Moe.Elsa.Common;
-using Positions = Solutions.Now.Moe.Elsa.Common.Positions;
-using System.Runtime.Intrinsics.Arm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Solutions.Now.Moe.Elsa.Common;
+using Solutions.Now.Moe.Elsa.Models;
+using Solutions.Now.Moe.Elsa.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Runtime.Intrinsics.Arm;
+using System.Threading.Tasks;
+using Positions = Solutions.Now.Moe.Elsa.Common.Positions;
 
 namespace Solutions.Now.CMIS2.Elsa.Activities
 {
@@ -51,31 +52,45 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
 
             try
             {
-                //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                //HttpClientHandler handler = new HttpClientHandler
+                //system.net.servicepointmanager.securityprotocol = securityprotocoltype.tls12 | securityprotocoltype.tls11 | securityprotocoltype.tls;
+                //httpclienthandler handler = new httpclienthandler
                 //{
-                //    ServerCertificateCustomValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; },
+                //    servercertificatecustomvalidationcallback = (senderx, certificate, chain, sslpolicyerrors) => { return true; },
                 //};
 
-                using (var httpClient = new HttpClient())
+
+                int flagSSL = int.Parse(_configuration["Elsa:Server:flagSSL"]);
+
+                HttpClientHandler handler = new HttpClientHandler();
+
+                if (flagSSL == 1)
                 {
-                    string URL = (connectionString.EndsWith("/"))
+                    // Enable TLS protocols
+                    System.Net.ServicePointManager.SecurityProtocol =
+                        SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+                    // Ignore SSL certificate errors (not recommended for production)
+                    handler.ServerCertificateCustomValidationCallback =
+                        (senderX, certificate, chain, sslPolicyErrors) => true;
+                }
+
+                using (var httpClient = new HttpClient(handler)) // ✅ pass handler here
+                {
+                    string URL = connectionString.EndsWith("/")
                         ? connectionString + "api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial + "/" + userName
                         : connectionString + "/api/WorkFlows/Request/" + WorkFlowSignal + "/" + RequestSerial + "/" + userName;
-
 
                     HttpResponseMessage response = await httpClient.GetAsync(URL);
                     if (response.IsSuccessStatusCode)
                     {
                         Console.WriteLine("Successfully send");
-
                     }
                     else
                     {
-                        Console.WriteLine("failer send");
-
+                        Console.WriteLine("Failure send");
                     }
                 }
+
                 string urlEmpty = _configuration.GetValue<string>("Server:URL");
                 context.Output = urlEmpty;
             }
