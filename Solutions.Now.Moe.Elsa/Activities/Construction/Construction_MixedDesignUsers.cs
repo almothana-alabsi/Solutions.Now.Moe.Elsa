@@ -70,7 +70,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[2] = committeeCaptain.userName;
+                if (committeeCaptain.userName != null)
+                    userNameDB[2] = committeeCaptain.userName;
 
    
                 //مدير الشؤون المالية والادارية 
@@ -84,7 +85,8 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                 }
                 //رئيس اللجنة
                 var committeeCaptainS = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[6] = committeeCaptainS.userName;
+                if (committeeCaptainS.userName != null)
+                  userNameDB[6] = committeeCaptainS.userName;
 
                 //مدير مديرية التربية والتعليم
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.position == Positions.AdministrationHead);

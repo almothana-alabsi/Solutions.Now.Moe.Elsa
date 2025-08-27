@@ -100,7 +100,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[10] = users.username;
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.SG && u.organization == Organization.MOE);
                 userNameDB[11] = users.username;
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Minister);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.position == Positions.Minister && u.organization == Organization.MOE);
                 userNameDB[12] = users.username;
             }
             catch (Exception ex)

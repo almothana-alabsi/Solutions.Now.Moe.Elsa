@@ -62,7 +62,9 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                 //رئيس اللجنة
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                userNameDB[0] = committeeCaptain.userName;
+                if (committeeCaptain.userName != null)
+
+                    userNameDB[0] = committeeCaptain.userName;
  
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
