@@ -66,7 +66,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 userNameDB[0] = committeeCaptain.userName;
                 //مهندس موقع 
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.siteEng);
-                userNameDB[1] = users.username;
+                userNameDB[1] = userNameDB[3] = users.username;
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
                 userNameDB[2] = users.username;

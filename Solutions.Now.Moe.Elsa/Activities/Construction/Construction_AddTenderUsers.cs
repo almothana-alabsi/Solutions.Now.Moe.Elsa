@@ -88,22 +88,30 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                         userNameDB[6] = users.username;
                     }
                 }
-                //مدير مديرية الحسابات
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.AccountsDirectorate && u.position == Positions.DirectorateHead && u.organization == 2);
+                //مدير مديرية الصيانة
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Directorate == Hierarchy.maintenanceDepartment && u.position == Positions.DirectorateHead && u.organization == 2);
                 userNameDB[7] = users.username;
                 //رئيس قسم النفقات والمخصصات
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Section == Hierarchy.ExpenseSection && u.position == Positions.sectionHead && u.organization == 2);
                 userNameDB[8] = users.username;
                 // المقاول
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.contractor == tender.tenderContracter1 && u.position == Positions.Contractor);
-                userNameDB[9] = users.username;
+                if (users != null)
+                {
+                    userNameDB[9] = users.username;
+                }
                 // رئيس قسم الرقابة الداخلية
-                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u =>/* u.Administration == tender.tenderSupervisor &&*/u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor &&u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
                if (users != null)
                 {
                     userNameDB[10] = users.username;
+                } else
+                {
+                    users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.organization == Organization.MOE && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionDepartmentInternalControl && u.position == Positions.sectionHead);
+                    userNameDB[10] = users.username;
+
                 }
-               // رئيس قسم المالية في مديرية التربية
+                // رئيس قسم المالية في مديرية التربية
                 users = await _ssoDBContext.TblUsers.FirstOrDefaultAsync(u => u.Administration == tender.tenderSupervisor && u.Directorate == Hierarchy.DirectorateOfAdministrativeAndFinancialAffairs && u.Section == Hierarchy.sectionFinanial && u.position == Positions.sectionHead);
                 if (users != null)
                 {
