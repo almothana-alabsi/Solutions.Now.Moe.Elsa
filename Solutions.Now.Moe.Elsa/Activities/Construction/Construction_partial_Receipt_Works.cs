@@ -111,7 +111,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
                 }
                 //المهندس المشرف
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.tenderSerial == tender.tenderSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                if (committeeCaptain.userName != null)
+                  if (committeeCaptain != null)
                 {
                     userNameDB[8] = userNameDB[13] = committeeCaptain.userName;
 

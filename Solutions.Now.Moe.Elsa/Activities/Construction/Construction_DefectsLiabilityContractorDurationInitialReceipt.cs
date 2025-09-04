@@ -66,7 +66,7 @@ namespace Solutions.Now.CMIS2.Elsa.Activities
                 var tender = await _ConstructionDBContext.Tender.FirstOrDefaultAsync(x => x.tenderSerial == contractorStaff.tenderSerial);
                 //رئيس اللجنة
                 var committeeCaptain = await _ConstructionDBContext.CommitteeMember.FirstOrDefaultAsync(x => x.masterSerial == RequestSerial && x.type == WorkFlowsName.Construction_SupervisionCommittee && x.captain == 1);
-                if (committeeCaptain.userName != null)
+                  if (committeeCaptain != null)
 
                     userNameDB[10] = committeeCaptain.userName;
                 //رئيس قسم الابنية
