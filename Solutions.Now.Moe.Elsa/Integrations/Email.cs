@@ -15,7 +15,7 @@ namespace Solutions.Now.Moe.Elsa.Integrations
     {
 
         private readonly ConstructionDBContext _moeDBContext;
-        private readonly SsoDBContext _ssoDBContext;
+        private readonly SsoDBContext _SsoDBContext;
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
 
@@ -23,15 +23,14 @@ namespace Solutions.Now.Moe.Elsa.Integrations
         {
             _moeDBContext = MoeDBContext;
             _configuration = configuration;
-            _ssoDBContext = ssoDBContext;
+            _SsoDBContext = ssoDBContext;
         }
         public async Task<string> SendEmail(string actionBy, int requsetType, int? requestSerial, string lang, int isFYI)
         {
             string URL = _configuration["EmailApi:URL"];
             string descEn = "";
             string descAr = "";
-            string PlanningURl = _configuration["EmailApi:PlanningURl"];
-
+            string urlEmail = "";
             if (isFYI == 1)
             {
                 descAr = _configuration["EmailApi:descArFYI"];
@@ -43,33 +42,14 @@ namespace Solutions.Now.Moe.Elsa.Integrations
                 descAr = _configuration["EmailApi:descAr"];
                 descEn = _configuration["EmailApi:descEn"];
             }
-            string urlEmail = "";
-
 
             try
             {
                 var langFilter = lang.ToLower();
-                string? descMSG = "";
-                string? projectData = "";
-                var desc = await _ssoDBContext.MasterData.OrderBy(y => y.serial).FirstOrDefaultAsync(x => x.serial == requsetType);
+                string descMSG = "";
+                var desc = await _SsoDBContext.MasterData.OrderBy(y => y.serial).FirstOrDefaultAsync(x => x.serial == requsetType);
                 if (requestSerial != null)
                 {
-
-                        projectData = _moeDBContext.Tender.OrderBy(x => x.tenderSerial == requestSerial).FirstOrDefault(y => y.tenderSerial == requestSerial).fullTender;
-
-
-                        if (langFilter == "en")
-                        {
-                            descMSG = descEn + " " + desc.descEN + " / " + projectData + PlanningURl;
-                        }
-                        else
-                        {
-                            descMSG = descAr + " " + desc.descAR + " / " + projectData + PlanningURl;
-
-                        }
-                    }
-                    else
-                    {
                         if (langFilter == "en")
                         {
                             descMSG = descEn + " " + desc.descEN;
@@ -79,17 +59,18 @@ namespace Solutions.Now.Moe.Elsa.Integrations
                             descMSG = descAr + " " + desc.descAR;
 
                         }
-                    }
-                    var user = await _ssoDBContext.TblUsers.OrderBy(x => x.serial).FirstOrDefaultAsync(y => y.username.Equals(actionBy));
+                    
+                    var user = await _SsoDBContext.TblUsers.OrderBy(x => x.serial).FirstOrDefaultAsync(y => y.username.Equals(actionBy));
                     if (user != null)
                     {
                         if (user.email != null)
                         {
                             urlEmail = URL + user.email.ToString() + "&createdBy=" + actionBy.ToString() + "&lang=ar&descMSG=" + descMSG;
+
                         }
                     }
 
-                
+                }
                 return urlEmail;
             }
             catch (Exception ex)
@@ -99,7 +80,6 @@ namespace Solutions.Now.Moe.Elsa.Integrations
             }
 
         }
-
         public bool IsValidEmail(string email)
         {
             var trimmedEmail = email.Trim();
