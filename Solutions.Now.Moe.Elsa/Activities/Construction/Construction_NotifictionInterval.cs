@@ -169,7 +169,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                             connection.Close();
                         }
                     var user = await _databaseConnectionSSO.TblUsers.OrderBy(x => x.serial).FirstOrDefaultAsync(y => y.username.ToLower().Equals(approvalHistory.actionBy.ToLower()));
-                    if (Int32.Parse(_configuration["SMS:flag"]) == 1)
+                    if (Int32.Parse(_configuration["SMS:flagFYI"]) == 1)
                     {
                         if (user != null)
                         {
@@ -205,7 +205,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
                                     }
                                 }
                             }
-                            if (Int32.Parse(_configuration["EmailApi:flag"]) == 1)
+                            if (Int32.Parse(_configuration["EmailApi:flagFYI"]) == 1)
                             {
                                 if (user.email != null)
                                 {
@@ -220,7 +220,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                                         using (var httpClient = new HttpClient(handler))
                                         {
-                                            string url = await _email.SendEmail(approvalHistory.actionBy, RequestType, approvalHistory.requestSerial, "ar", 1);
+                                            string url = await _email.SendEmail(approvalHistory.actionBy, RequestType, approvalHistory.requestSerial, "ar", 1, user.email);
 
                                             HttpResponseMessage response = await httpClient.GetAsync(url);
                                             if (response.IsSuccessStatusCode)

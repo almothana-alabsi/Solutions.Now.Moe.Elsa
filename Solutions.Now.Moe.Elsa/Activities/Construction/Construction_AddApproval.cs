@@ -31,11 +31,12 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
         private readonly IConfiguration _configuration;
         private readonly SsoDBContext _databaseConnectionSSO;
         private Email _email;
-        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext, SsoDBContext databaseConnectionSSO)
+        public Construction_AddApproval(IConfiguration configuration, ConstructionDBContext MoeDBContext, SsoDBContext databaseConnectionSSO,Email email)
         {
             _moeDBContext = MoeDBContext;
             _configuration = configuration;
             _databaseConnectionSSO = databaseConnectionSSO;
+            _email = email;
         }
 
 
@@ -161,7 +162,7 @@ namespace Solutions.Now.Moe.Elsa.Activities.Construction
 
                                     using (var httpClient = new HttpClient(handler))
                                     {
-                                        string url = await _email.SendEmail(approvalHistory.actionBy, RequestType, approvalHistory.requestSerial, "ar", 0);
+                                        string url = await _email.SendEmail(approvalHistory.actionBy, RequestType, approvalHistory.requestSerial, "ar", 0, user.email);
 
                                         HttpResponseMessage response = await httpClient.GetAsync(url);
                                         if (response.IsSuccessStatusCode)

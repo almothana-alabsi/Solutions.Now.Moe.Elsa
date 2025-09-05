@@ -206,7 +206,7 @@ namespace Solutions.Now.Moe.Elsa.Activities
 
                                         using (var httpClient = new HttpClient(handler))
                                         {
-                                            string url = await _email.SendEmail(approvalHistory.actionBy, RequestType, approvalHistory.requestSerial, "ar", 0);
+                                            string url = await _email.SendEmail(approvalHistory.actionBy, RequestType, approvalHistory.requestSerial, "ar", 0, user.email);
 
                                             HttpResponseMessage response = await httpClient.GetAsync(url);
                                             if (response.IsSuccessStatusCode)

@@ -18,6 +18,7 @@ using Automatonymous;
 using Quartz;
 using Solutions.Now.CMIS2.Elsa.Activities;
 using Solutions.Now.DesignReviewAndPlanning.Elsa.Activities;
+using Solutions.Now.Moe.Elsa.Integrations;
 
 namespace Solutions.Now.Moe.Elsa
 {
@@ -37,7 +38,7 @@ namespace Solutions.Now.Moe.Elsa
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-
+            services.AddScoped<Email>();
             var elsaSection = Configuration.GetSection("Elsa");
 
             // Elsa services.

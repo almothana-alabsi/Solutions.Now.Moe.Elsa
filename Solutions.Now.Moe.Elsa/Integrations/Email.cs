@@ -25,7 +25,7 @@ namespace Solutions.Now.Moe.Elsa.Integrations
             _configuration = configuration;
             _SsoDBContext = ssoDBContext;
         }
-        public async Task<string> SendEmail(string actionBy, int requsetType, int? requestSerial, string lang, int isFYI)
+        public async Task<string> SendEmail(string actionBy, int requsetType, int? requestSerial, string lang, int isFYI, string email)
         {
             string URL = _configuration["EmailApi:URL"];
             string descEn = "";
@@ -59,16 +59,9 @@ namespace Solutions.Now.Moe.Elsa.Integrations
                             descMSG = descAr + " " + desc.descAR;
 
                         }
-                    
-                    var user = await _SsoDBContext.TblUsers.OrderBy(x => x.serial).FirstOrDefaultAsync(y => y.username.Equals(actionBy));
-                    if (user != null)
-                    {
-                        if (user.email != null)
-                        {
-                            urlEmail = URL + user.email.ToString() + "&createdBy=" + actionBy.ToString() + "&lang=ar&descMSG=" + descMSG;
+      
+                            urlEmail = URL + email.ToString() + "&createdBy=" + actionBy.ToString() + "&lang=ar&descMSG=" + descMSG;
 
-                        }
-                    }
 
                 }
                 return urlEmail;
