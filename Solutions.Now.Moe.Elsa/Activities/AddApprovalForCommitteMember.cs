@@ -197,7 +197,11 @@ namespace Solutions.Now.Moe.Elsa.Activities
                                 {
                                     if (_email.IsValidEmail(user.email))
                                     {
-                                        HttpClientHandler handler = new HttpClientHandler();
+                                        System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                                        HttpClientHandler handler = new HttpClientHandler
+                                        {
+                                            ServerCertificateCustomValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; },
+                                        };
                                         if (!string.IsNullOrEmpty(_configuration["EmailApi:Proxy"]))
                                         {
 
